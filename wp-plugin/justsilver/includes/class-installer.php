@@ -59,6 +59,7 @@ class NS_Installer {
 			'reminders'          => 'yes',
 			'reminder_hour'      => '10',
 			'animations'         => 'yes',
+			'brand_login'        => 'yes',
 		);
 		update_option( 'ns_settings', $settings );
 		NS_Price_API::reschedule();

@@ -54,3 +54,5 @@ require NS_DIR . 'includes/class-stores.php';
 require NS_DIR . 'includes/class-ics.php';
 require NS_DIR . 'includes/class-chart.php';
 require NS_DIR . 'includes/class-alerts.php';
+require NS_DIR . 'includes/class-bookings.php';
+require NS_DIR . 'includes/class-admin.php';

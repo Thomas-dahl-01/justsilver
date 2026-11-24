@@ -205,6 +205,53 @@ class NS_CLI {
 		update_option( 'ns_silver_price_updated', time() );
 	}
 
+	/**
+	 * Create fictional demo bookings for the next days (for the calendar and dashboard).
+	 *
+	 * [--days=<n>]
+	 * : Number of days ahead. Default 7.
+	 *
+	 * @subcommand demo-bookings
+	 */
+	public function demo_bookings( $args = array(), $assoc = array() ) {
+		mt_srand( 11 );
+		$names    = array( 'Anna Holm', 'Mads Krogh', 'Sofie Lund', 'Peter Vind', 'Ida Mørk', 'Jonas Brix', 'Freja Dal', 'Emil Strand', 'Clara Bøg', 'Oskar Fjord', 'Maja Lys', 'Viktor Eng' );
+		$purposes = array_keys( NS_Bookings::purposes() );
+		$products = NS_Silver_Price::spot_product_ids( 1 );
+		$created  = 0;
+		foreach ( NS_Stores::all() as $post ) {
+			$store = NS_Stores::get( $post->ID );
+			for ( $i = 0; $i < (int) ( $assoc['days'] ?? 7 ); $i++ ) {
+				$day   = ( new DateTimeImmutable( 'today', wp_timezone() ) )->modify( "+{$i} day" );
+				$slots = array_keys( NS_Stores::available_slots( $store, $day ) );
+				shuffle( $slots );
+				foreach ( array_slice( $slots, 0, mt_rand( 1, 4 ) ) as $time ) {
+					$name = $names[ mt_rand( 0, count( $names ) - 1 ) ];
+					$id   = wp_insert_post( array(
+						'post_type'   => NS_Bookings::CPT,
+						'post_status' => 'publish',
+						'post_title'  => sprintf( '%s – %s %s', $name, $day->format( 'd.m.Y' ), $time ),
+						'meta_input'  => array(
+							'_ns_store'    => $store['id'],
+							'_ns_date'     => $day->format( 'Y-m-d' ),
+							'_ns_time'     => $time,
+							'_ns_purpose'  => $purposes[ mt_rand( 0, count( $purposes ) - 1 ) ],
+							'_ns_name'     => $name,
+							'_ns_email'    => strtolower( strtok( $name, ' ' ) ) . '@example.test',
+							'_ns_phone'    => '12 34 ' . mt_rand( 10, 99 ) . ' ' . mt_rand( 10, 99 ),
+							'_ns_products' => mt_rand( 0, 1 ) ? array( $products[ mt_rand( 0, count( $products ) - 1 ) ] ) : array(),
+							'_ns_status'   => mt_rand( 0, 3 ) ? 'booket' : 'bekraeftet',
+						),
+					) );
+					if ( $id ) {
+						$created++;
+					}
+				}
+			}
+		}
+		WP_CLI::success( "Oprettet {$created} opdigtede demo-bookinger." );
+	}
+
 	private function demo_stores(): void {
 		$demo = array(
 			array( 'JustSilver København', 'Sølvgade 12', '1620', 'København V', '12 34 56 71', 'kbh@justsilver.example' ),

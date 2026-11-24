@@ -18,6 +18,7 @@ $W option update woocommerce_coming_soon no
 $W theme install storefront --activate
 $W plugin activate justsilver
 $W justsilver seed --stores
+$W justsilver demo-bookings
 # Fuld bredde på Sølv- og Book tid-siderne i Storefront
 for key in silver_page booking_page; do
   id=$($W option pluck ns_settings $key | tr -d "")

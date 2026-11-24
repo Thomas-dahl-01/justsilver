@@ -15,7 +15,7 @@ final class BootTest extends TestCase {
 	}
 
 	public function test_simple_init_methods_do_not_translate(): void {
-		foreach ( array( 'NS_Silver_Price', 'NS_Chart' ) as $class ) {
+		foreach ( array( 'NS_Silver_Price', 'NS_Chart', 'NS_Admin' ) as $class ) {
 			$GLOBALS['ns_test_translations'] = 0;
 			$class::init();
 			$this->assertSame( 0, $GLOBALS['ns_test_translations'], "$class::init() translated text before init" );

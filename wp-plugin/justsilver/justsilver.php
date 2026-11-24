@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       JustSilver
  * Description:       Turns WooCommerce into a silver shop: prices follow the daily silver spot price (updated automatically), stores with opening hours, appointment booking with product reservation, price chart, price alerts, a sell-your-silver calculator and Gutenberg blocks.
- * Version:           1.2.0
+ * Version:           1.3.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            Thomas-dahl-01
@@ -15,7 +15,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NS_VERSION', '1.2.0' );
+define( 'NS_VERSION', '1.3.0' );
 define( 'NS_FILE', __FILE__ );
 define( 'NS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NS_URL', plugin_dir_url( __FILE__ ) );
@@ -35,6 +35,7 @@ require_once NS_DIR . 'includes/class-chart.php';
 require_once NS_DIR . 'includes/class-settings.php';
 require_once NS_DIR . 'includes/class-frontend.php';
 require_once NS_DIR . 'includes/class-blocks.php';
+require_once NS_DIR . 'includes/class-admin.php';
 require_once NS_DIR . 'includes/class-installer.php';
 
 add_action( 'before_woocommerce_init', function () {
@@ -71,6 +72,7 @@ add_action( 'plugins_loaded', function () {
 	NS_Settings::init();
 	NS_Frontend::init();
 	NS_Blocks::init();
+	NS_Admin::init();
 
 	if ( defined( 'WP_CLI' ) && WP_CLI ) {
 		require_once NS_DIR . 'includes/class-cli.php';

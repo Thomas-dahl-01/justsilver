@@ -47,6 +47,30 @@ priser efter dagens sølvkurs, interaktiv prisgraf, prisalarmer, sælg-dit-sølv
   </tr>
 </table>
 
+## Admin
+
+Butikkens personale bruger WordPress' velkendte kontrolpanel – med JustSilver-præg:
+
+| | |
+|---|---|
+| **Overblik på kontrolpanelet** | Dagens sølvpris med graf, besøg i dag og i morgen, ordrer, varer med lavt lager og prisalarmer. |
+| **Bookingkalender** | Dagens besøg som tidslinje pr. butik, ugeoversigt, "nu"-linje og farver efter status. Overlappende besøg vises side om side. |
+| **Indstillinger** | Opdelt i kort med ikoner og en stor pris-boks med 90-dages graf øverst. |
+| **Login-side** | JustSilver-logo og nordlys-baggrund i stedet for WordPress-logoet (kan slås fra). |
+
+<table>
+  <tr>
+    <td><img src="docs/screenshots/admin-dashboard.png" alt="Overblik på kontrolpanelet"></td>
+    <td><img src="docs/screenshots/admin-login.png" alt="Login-side"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/admin-calendar.png" alt="Bookingkalender"></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="docs/screenshots/admin-settings.png" alt="Indstillinger"></td>
+  </tr>
+</table>
+
 ## Teknologi
 
 - **WordPress** + **WooCommerce** (PHP 8.1+) – kører på et almindeligt webhotel
@@ -57,7 +81,7 @@ priser efter dagens sølvkurs, interaktiv prisgraf, prisalarmer, sælg-dit-sølv
 
 ## Kvalitet
 
-- **33 unit tests** (PHPUnit) af prisberegning, opkøb, ledige tider, kalenderfil, graf og CSV-import
+- **36 unit tests** (PHPUnit) af prisberegning, opkøb, ledige tider, kalenderfil, graf, CSV-import og kalender-layout
 - **Integrationstest** mod en rigtig WordPress: reservation, frigivelse, påmindelse, prisalarm og alle blokke
 - **Browsertest** af alle effekter (Playwright), både med og uden "reducer bevægelse"
 - **GitHub Actions** kører lint og tests på PHP 8.1–8.4, tjekker JavaScript og at oversættelsen er komplet

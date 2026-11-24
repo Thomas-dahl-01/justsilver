@@ -325,8 +325,44 @@ DA = {
     "Calculate": "Beregn",
     "Book a free valuation": "Book en gratis vurdering",
     "Unit": "Enhed",
+    # Admin (1.3)
+    "JustSilver – overview": "JustSilver – overblik",
+    "%s per kg": "%s pr. kg",
+    "visits today": "besøg i dag",
+    "visits tomorrow": "besøg i morgen",
+    "orders today": "ordrer i dag",
+    "low on stock": "lavt lager",
+    "price alerts": "prisalarmer",
+    "Today’s visits": "Dagens besøg",
+    "No visits booked today.": "Ingen besøg booket i dag.",
+    "Low on stock": "Lavt lager",
+    "All silver items are well stocked.": "Alle sølvvarer er godt på lager.",
+    "Set silver price": "Sæt sølvpris",
+    "Booking calendar": "Bookingkalender",
+    "New product": "Ny vare",
+    "Calendar": "Kalender",
+    "Calendar view": "Kalendervisning",
+    "List view": "Listevisning",
+    "Previous day": "Forrige dag",
+    "Next day": "Næste dag",
+    "Show": "Vis",
+    "No stores yet.": "Ingen butikker endnu.",
+    "item reserved": "vare reserveret",
+    "Prices": "Priser",
+    "How products and buy-back offers are priced from the spot price.": "Hvordan varer og opkøbstilbud prissættes ud fra dagsprisen.",
+    "Automatic price": "Automatisk kurs",
+    "Fetch the silver price from metalpriceapi.com on a schedule.": "Hent sølvkursen fra metalpriceapi.com automatisk.",
+    "Reservations, reminders and who receives new bookings.": "Reservationer, påmindelser og hvem der får nye bookinger.",
+    "Pages & shop": "Sider & butik",
+    "Where the silver shop lives on your site.": "Hvor sølv-shoppen ligger på dit websted.",
+    "Look and feel for customers and staff.": "Udseende for kunder og personale.",
+    "JustSilver design on the login page": "JustSilver-design på login-siden",
 }
-PLURALS = {"%d item": ("%d vare", "%d varer")}
+PLURALS = {
+    "%d item": ("%d vare", "%d varer"),
+    "%d in stock": ("%d på lager", "%d på lager"),
+    "%d visit": ("%d besøg", "%d besøg"),
+}
 
 
 def esc(s):

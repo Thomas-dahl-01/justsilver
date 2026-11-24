@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: JustSilver 1.1.0\n"
+"Project-Id-Version: JustSilver 1.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/justsilver\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-24T11:55:41+00:00\n"
+"POT-Creation-Date: 2026-11-24T13:51:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: justsilver\n"
@@ -30,6 +30,136 @@ msgstr "Gør WooCommerce til en sølvbutik: priser følger dagens sølvkurs (opd
 #: justsilver.php
 msgid "Thomas-dahl-01"
 msgstr "Thomas-dahl-01"
+
+#: includes/class-admin.php:49
+msgid "JustSilver – overview"
+msgstr "JustSilver – overblik"
+
+#: includes/class-admin.php:112
+#: includes/class-settings.php:73
+#: templates/landing.php:54
+msgid "Today’s silver price"
+msgstr "Dagens sølvpris"
+
+#. translators: %s: price per kg
+#: includes/class-admin.php:117
+#, php-format
+msgid "%s per kg"
+msgstr "%s pr. kg"
+
+#: includes/class-admin.php:123
+msgid "visits today"
+msgstr "besøg i dag"
+
+#: includes/class-admin.php:124
+msgid "visits tomorrow"
+msgstr "besøg i morgen"
+
+#: includes/class-admin.php:125
+msgid "orders today"
+msgstr "ordrer i dag"
+
+#: includes/class-admin.php:126
+msgid "low on stock"
+msgstr "lavt lager"
+
+#: includes/class-admin.php:127
+msgid "price alerts"
+msgstr "prisalarmer"
+
+#: includes/class-admin.php:132
+msgid "Today’s visits"
+msgstr "Dagens besøg"
+
+#: includes/class-admin.php:141
+msgid "No visits booked today."
+msgstr "Ingen besøg booket i dag."
+
+#: includes/class-admin.php:145
+msgid "Low on stock"
+msgstr "Lavt lager"
+
+#. translators: %d: items in stock
+#: includes/class-admin.php:150
+#, php-format
+msgid "%d in stock"
+msgid_plural "%d in stock"
+msgstr[0] "%d på lager"
+msgstr[1] "%d på lager"
+
+#: includes/class-admin.php:154
+msgid "All silver items are well stocked."
+msgstr "Alle sølvvarer er godt på lager."
+
+#: includes/class-admin.php:160
+msgid "Set silver price"
+msgstr "Sæt sølvpris"
+
+#: includes/class-admin.php:161
+#: includes/class-admin.php:171
+#: includes/class-admin.php:254
+msgid "Booking calendar"
+msgstr "Bookingkalender"
+
+#: includes/class-admin.php:162
+msgid "New product"
+msgstr "Ny vare"
+
+#: includes/class-admin.php:171
+msgid "Calendar"
+msgstr "Kalender"
+
+#: includes/class-admin.php:175
+msgid "Calendar view"
+msgstr "Kalendervisning"
+
+#: includes/class-admin.php:255
+msgid "List view"
+msgstr "Listevisning"
+
+#: includes/class-admin.php:260
+msgid "Previous day"
+msgstr "Forrige dag"
+
+#: includes/class-admin.php:261
+#: includes/class-bookings.php:416
+msgid "Today"
+msgstr "I dag"
+
+#: includes/class-admin.php:262
+msgid "Next day"
+msgstr "Næste dag"
+
+#: includes/class-admin.php:270
+#: includes/class-bookings.php:419
+msgid "All stores"
+msgstr "Alle butikker"
+
+#: includes/class-admin.php:273
+msgid "Show"
+msgstr "Vis"
+
+#. translators: %d: number of visits
+#: includes/class-admin.php:285
+#, php-format
+msgid "%d visit"
+msgid_plural "%d visits"
+msgstr[0] "%d besøg"
+msgstr[1] "%d besøg"
+
+#: includes/class-admin.php:306
+#: includes/class-admin.php:316
+#: templates/landing.php:135
+msgid "Closed"
+msgstr "Lukket"
+
+#: includes/class-admin.php:335
+msgid "No stores yet."
+msgstr "Ingen butikker endnu."
+
+#: includes/class-admin.php:343
+msgid "item reserved"
+msgstr "vare reserveret"
 
 #: includes/class-alerts.php:24
 #: includes/class-alerts.php:26
@@ -97,7 +227,7 @@ msgid "Target price"
 msgstr "Ønsket pris"
 
 #: includes/class-blocks.php:13
-#: includes/class-settings.php:118
+#: includes/class-settings.php:170
 msgid "Silver front page"
 msgstr "Sølv-forside"
 
@@ -185,6 +315,7 @@ msgstr "Bookinger"
 #: includes/class-bookings.php:51
 #: includes/class-bookings.php:56
 #: includes/class-bookings.php:456
+#: includes/class-settings.php:152
 #: includes/class-stores.php:173
 msgid "Booking"
 msgstr "Booking"
@@ -372,16 +503,8 @@ msgid "Upcoming"
 msgstr "Kommende"
 
 #: includes/class-bookings.php:416
-msgid "Today"
-msgstr "I dag"
-
-#: includes/class-bookings.php:416
 msgid "All dates"
 msgstr "Alle datoer"
-
-#: includes/class-bookings.php:419
-msgid "All stores"
-msgstr "Alle butikker"
 
 #: includes/class-bookings.php:423
 msgid "All statuses"
@@ -430,83 +553,83 @@ msgstr "reserveret"
 msgid "stock"
 msgstr "lager"
 
-#: includes/class-frontend.php:33
+#: includes/class-frontend.php:55
 #: templates/price-chart.php:18
 msgid "days"
 msgstr "dage"
 
-#: includes/class-frontend.php:34
+#: includes/class-frontend.php:56
 msgid "kr/g"
 msgstr "kr/g"
 
-#: includes/class-frontend.php:35
+#: includes/class-frontend.php:57
 msgid "fine silver"
 msgstr "rent sølv"
 
 #. translators: %s: purity, e.g. 999
-#: includes/class-frontend.php:105
+#: includes/class-frontend.php:127
 #, php-format
 msgid "Purity %s"
 msgstr "Finhed %s"
 
 #. translators: %s: weight of fine silver
 #. translators: %s: grams of fine silver
-#: includes/class-frontend.php:107
+#: includes/class-frontend.php:129
 #: templates/sell-calculator.php:27
 #, php-format
 msgid "%s fine silver"
 msgstr "%s rent sølv"
 
 #. translators: %s: date and time
-#: includes/class-frontend.php:114
+#: includes/class-frontend.php:136
 #, php-format
 msgid "Price follows the silver spot price (updated %s)."
 msgstr "Prisen følger sølvets dagspris (opdateret %s)."
 
-#: includes/class-frontend.php:115
+#: includes/class-frontend.php:137
 msgid "Price follows the silver spot price."
 msgstr "Prisen følger sølvets dagspris."
 
-#: includes/class-frontend.php:126
+#: includes/class-frontend.php:148
 msgid "Book a visit – we’ll reserve it for you"
 msgstr "Book tid – vi reserverer den til dig"
 
-#: includes/class-frontend.php:127
+#: includes/class-frontend.php:149
 msgid "Book a visit and see it in store"
 msgstr "Book tid og se den i butikken"
 
-#: includes/class-frontend.php:136
+#: includes/class-frontend.php:158
 #: includes/class-installer.php:45
 #: templates/landing.php:40
 #: templates/landing.php:117
 msgid "Book a visit"
 msgstr "Book tid"
 
-#: includes/class-frontend.php:146
+#: includes/class-frontend.php:168
 msgid "Popular"
 msgstr "Populær"
 
 #. translators: %d: items left
-#: includes/class-frontend.php:150
+#: includes/class-frontend.php:172
 #, php-format
 msgid "Only %d left"
 msgstr "Kun %d tilbage"
 
-#: includes/class-frontend.php:160
-#: includes/class-product-fields.php:90
+#: includes/class-frontend.php:182
+#: includes/class-product-fields.php:93
 msgid "Condition"
 msgstr "Stand"
 
-#: includes/class-frontend.php:163
-#: includes/class-product-fields.php:87
+#: includes/class-frontend.php:185
+#: includes/class-product-fields.php:90
 msgid "Year"
 msgstr "Årgang"
 
-#: includes/class-frontend.php:242
+#: includes/class-frontend.php:265
 #: includes/class-installer.php:30
 #: includes/class-installer.php:48
-#: includes/class-product-fields.php:47
-#: includes/class-product-fields.php:213
+#: includes/class-product-fields.php:50
+#: includes/class-product-fields.php:216
 msgid "Silver"
 msgstr "Sølv"
 
@@ -609,144 +732,144 @@ msgstr "Pris-API fejlede: %s"
 msgid "The price API answered without an XAG rate."
 msgstr "Pris-API'et svarede uden XAG-kurs."
 
-#: includes/class-product-fields.php:15
+#: includes/class-product-fields.php:18
 msgid "Silver type"
 msgstr "Sølvtype"
 
-#: includes/class-product-fields.php:16
-#: includes/class-product-fields.php:82
+#: includes/class-product-fields.php:19
+#: includes/class-product-fields.php:85
 #: templates/sell-calculator.php:17
 msgid "Purity"
 msgstr "Finhed"
 
-#: includes/class-product-fields.php:17
+#: includes/class-product-fields.php:20
 msgid "Mint"
 msgstr "Præger"
 
-#: includes/class-product-fields.php:18
+#: includes/class-product-fields.php:21
 msgid "Weight"
 msgstr "Vægt"
 
-#: includes/class-product-fields.php:61
+#: includes/class-product-fields.php:64
 msgid "Silver product"
 msgstr "Sølvvare"
 
-#: includes/class-product-fields.php:62
+#: includes/class-product-fields.php:65
 msgid "Tick to price and show this product as silver."
 msgstr "Markér for at varen prissættes og vises som sølv."
 
-#: includes/class-product-fields.php:67
+#: includes/class-product-fields.php:70
 msgid "Type"
 msgstr "Type"
 
-#: includes/class-product-fields.php:68
-#: includes/class-settings.php:117
-#: includes/class-settings.php:118
-#: includes/class-settings.php:119
+#: includes/class-product-fields.php:71
+#: includes/class-settings.php:169
+#: includes/class-settings.php:170
+#: includes/class-settings.php:171
 msgid "– choose –"
 msgstr "– vælg –"
 
-#: includes/class-product-fields.php:73
+#: includes/class-product-fields.php:76
 #: templates/sell-calculator.php:15
 msgid "Weight (grams)"
 msgstr "Vægt (gram)"
 
-#: includes/class-product-fields.php:77
+#: includes/class-product-fields.php:80
 msgid "Gross weight. 1 oz = 31.10 g."
 msgstr "Bruttovægt. 1 oz = 31,10 g."
 
-#: includes/class-product-fields.php:86
+#: includes/class-product-fields.php:89
 msgid "Mint / maker"
 msgstr "Præger / producent"
 
-#: includes/class-product-fields.php:97
+#: includes/class-product-fields.php:100
 msgid "Pricing"
 msgstr "Prissætning"
 
-#: includes/class-product-fields.php:99
+#: includes/class-product-fields.php:102
 msgid "Spot price + premium (automatic)"
 msgstr "Dagspris + tillæg (automatisk)"
 
-#: includes/class-product-fields.php:100
+#: includes/class-product-fields.php:103
 msgid "Fixed price (use the General tab)"
 msgstr "Fast pris (brug Generelt-fanen)"
 
-#: includes/class-product-fields.php:106
+#: includes/class-product-fields.php:109
 msgid "Premium over spot (%)"
 msgstr "Tillæg over dagspris (%)"
 
-#: includes/class-product-fields.php:111
+#: includes/class-product-fields.php:114
 msgid "Empty = the default premium from the settings."
 msgstr "Tom = standardtillægget fra indstillingerne."
 
-#: includes/class-product-fields.php:116
+#: includes/class-product-fields.php:119
 msgid "Can be seen in store"
 msgstr "Kan ses i butikken"
 
-#: includes/class-product-fields.php:117
+#: includes/class-product-fields.php:120
 msgid "Show the \"Book a visit and see it in store\" button."
 msgstr "Vis knappen \"Book tid og se den i butikken\"."
 
-#: includes/class-product-fields.php:121
+#: includes/class-product-fields.php:124
 msgid "Spot price"
 msgstr "Dagspris"
 
 #. translators: %s: price per kg
-#: includes/class-product-fields.php:124
+#: includes/class-product-fields.php:127
 #: templates/landing.php:59
 #, php-format
 msgid "%s per kg fine silver"
 msgstr "%s pr. kg rent sølv"
 
-#: includes/class-product-fields.php:125
+#: includes/class-product-fields.php:128
 msgid "Not set – see WooCommerce → JustSilver"
 msgstr "Ikke sat – se WooCommerce → JustSilver"
 
-#: includes/class-product-fields.php:228
+#: includes/class-product-fields.php:231
 msgid "fixed price"
 msgstr "fast pris"
 
-#: includes/class-product-fields.php:228
+#: includes/class-product-fields.php:231
 msgid "spot price"
 msgstr "dagspris"
 
-#: includes/class-product-fields.php:236
+#: includes/class-product-fields.php:239
 msgid "Silver: silver product (yes/no)"
 msgstr "Sølv: sølvvare (yes/no)"
 
-#: includes/class-product-fields.php:237
+#: includes/class-product-fields.php:240
 msgid "Silver: type"
 msgstr "Sølv: type"
 
-#: includes/class-product-fields.php:238
+#: includes/class-product-fields.php:241
 msgid "Silver: weight (g)"
 msgstr "Sølv: vægt (g)"
 
-#: includes/class-product-fields.php:239
+#: includes/class-product-fields.php:242
 msgid "Silver: purity"
 msgstr "Sølv: finhed"
 
-#: includes/class-product-fields.php:240
+#: includes/class-product-fields.php:243
 msgid "Silver: mint"
 msgstr "Sølv: præger"
 
-#: includes/class-product-fields.php:241
+#: includes/class-product-fields.php:244
 msgid "Silver: year"
 msgstr "Sølv: årgang"
 
-#: includes/class-product-fields.php:242
+#: includes/class-product-fields.php:245
 msgid "Silver: condition"
 msgstr "Sølv: stand"
 
-#: includes/class-product-fields.php:243
+#: includes/class-product-fields.php:246
 msgid "Silver: pricing (spot/fast)"
 msgstr "Sølv: prissætning (spot/fast)"
 
-#: includes/class-product-fields.php:244
+#: includes/class-product-fields.php:247
 msgid "Silver: premium %"
 msgstr "Sølv: tillæg %"
 
-#: includes/class-product-fields.php:245
+#: includes/class-product-fields.php:248
 msgid "Silver: can be seen in store (yes/no)"
 msgstr "Sølv: kan ses i butik (yes/no)"
 
@@ -764,183 +887,212 @@ msgid "See you tomorrow"
 msgstr "Vi ses i morgen"
 
 #: includes/class-settings.php:14
-#: includes/class-settings.php:105
+#: includes/class-settings.php:65
 msgid "Settings"
 msgstr "Indstillinger"
 
-#: includes/class-settings.php:69
-#: templates/landing.php:54
-msgid "Today’s silver price"
-msgstr "Dagens sølvpris"
-
-#: includes/class-settings.php:70
-msgid "per kg fine silver"
-msgstr "pr. kg rent sølv"
+#: includes/class-settings.php:77
+#: templates/landing.php:57
+msgid "since yesterday"
+msgstr "siden i går"
 
 #. translators: %s: date and time
-#: includes/class-settings.php:74
+#: includes/class-settings.php:83
 #, php-format
 msgid "Updated %s"
 msgstr "Opdateret %s"
 
 #. translators: %s: date and time
-#: includes/class-settings.php:74
+#: includes/class-settings.php:83
 msgid "Not set yet."
 msgstr "Ikke sat endnu."
 
 #. translators: %d: jobs
-#: includes/class-settings.php:78
+#: includes/class-settings.php:87
 #, php-format
 msgid "Prices are being recalculated in the background (%d jobs queued)."
 msgstr "Priserne genberegnes i baggrunden (%d job i kø)."
 
-#: includes/class-settings.php:83
+#. translators: %d: days
+#. translators: %d: number of days
+#: includes/class-settings.php:91
+#: templates/price-chart.php:14
+#, php-format
+msgid "Last %d days"
+msgstr "Seneste %d dage"
+
+#: includes/class-settings.php:97
+#: includes/class-settings.php:99
 msgid "Set manually"
 msgstr "Sæt manuelt"
 
-#: includes/class-settings.php:88
+#: includes/class-settings.php:104
 msgid "Fetch price from API now"
 msgstr "Hent kurs fra API nu"
 
 #. translators: %s: date and time
-#: includes/class-settings.php:91
+#: includes/class-settings.php:107
 #, php-format
 msgid "Last API call (%s):"
 msgstr "Seneste API-kald (%s):"
 
-#: includes/class-settings.php:94
+#: includes/class-settings.php:110
 msgid "History"
 msgstr "Historik"
 
-#: includes/class-settings.php:107
+#: includes/class-settings.php:126
+msgid "Prices"
+msgstr "Priser"
+
+#: includes/class-settings.php:127
+msgid "How products and buy-back offers are priced from the spot price."
+msgstr "Hvordan varer og opkøbstilbud prissættes ud fra dagsprisen."
+
+#: includes/class-settings.php:128
 msgid "Default premium over spot"
 msgstr "Standardtillæg over dagspris"
 
-#: includes/class-settings.php:108
+#: includes/class-settings.php:130
 msgid "Used when a product has no premium of its own."
 msgstr "Bruges når en vare ikke har sit eget tillæg."
 
-#: includes/class-settings.php:109
+#: includes/class-settings.php:131
 msgid "Buy-back margin"
 msgstr "Opkøbsmargin"
 
-#: includes/class-settings.php:110
+#: includes/class-settings.php:133
 msgid "The sell calculator offers the spot value minus this margin."
 msgstr "Sælg-beregneren tilbyder metalværdien minus denne margin."
 
-#: includes/class-settings.php:111
+#: includes/class-settings.php:138
+msgid "Automatic price"
+msgstr "Automatisk kurs"
+
+#: includes/class-settings.php:139
+msgid "Fetch the silver price from metalpriceapi.com on a schedule."
+msgstr "Hent sølvkursen fra metalpriceapi.com automatisk."
+
+#: includes/class-settings.php:140
 msgid "API key (metalpriceapi.com)"
 msgstr "API-nøgle (metalpriceapi.com)"
 
-#: includes/class-settings.php:112
+#: includes/class-settings.php:142
 msgid "Empty = manual price only."
 msgstr "Tom = kun manuel pris."
 
-#: includes/class-settings.php:113
+#: includes/class-settings.php:143
 msgid "Update price"
 msgstr "Opdater kurs"
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:145
 msgid "Every hour"
 msgstr "Hver time"
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:145
 msgid "Twice a day"
 msgstr "To gange dagligt"
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:145
 msgid "Daily"
 msgstr "Dagligt"
 
-#: includes/class-settings.php:114
+#: includes/class-settings.php:145
 msgid "Never (manual only)"
 msgstr "Aldrig (kun manuelt)"
 
-#: includes/class-settings.php:117
-msgid "Silver category"
-msgstr "Sølv-kategori"
+#: includes/class-settings.php:153
+msgid "Reservations, reminders and who receives new bookings."
+msgstr "Reservationer, påmindelser og hvem der får nye bookinger."
 
-#: includes/class-settings.php:119
-msgid "Booking page"
-msgstr "Booking-side"
-
-#: includes/class-settings.php:120
-msgid "Send bookings to"
-msgstr "Bookinger sendes til"
-
-#: includes/class-settings.php:121
-msgid "Used when the store has no email of its own."
-msgstr "Bruges hvis butikken ikke selv har en e-mail."
-
-#: includes/class-settings.php:122
-msgid "Reservations"
-msgstr "Reservationer"
-
-#: includes/class-settings.php:122
+#: includes/class-settings.php:154
 msgid "Reserve the items a customer books to see"
 msgstr "Reservér de varer, kunden booker tid til at se"
 
-#: includes/class-settings.php:123
+#: includes/class-settings.php:155
 msgid "Release after"
 msgstr "Frigiv efter"
 
-#: includes/class-settings.php:123
+#: includes/class-settings.php:156
 msgid "days if the visit is not marked completed."
 msgstr "dage, hvis besøget ikke er markeret som gennemført."
 
-#: includes/class-settings.php:124
-msgid "Reminders"
-msgstr "Påmindelser"
-
-#: includes/class-settings.php:124
+#: includes/class-settings.php:157
 msgid "Email customers the day before their visit"
 msgstr "Send kunderne en mail dagen før besøget"
 
-#: includes/class-settings.php:125
+#: includes/class-settings.php:158
 msgid "Send from"
 msgstr "Send fra kl."
 
-#: includes/class-settings.php:125
+#: includes/class-settings.php:159
 msgid "o’clock"
 msgstr " "
 
-#: includes/class-settings.php:126
-msgid "Pickup"
-msgstr "Afhentning"
+#: includes/class-settings.php:160
+msgid "Send bookings to"
+msgstr "Bookinger sendes til"
 
-#: includes/class-settings.php:126
+#: includes/class-settings.php:162
+msgid "Used when the store has no email of its own."
+msgstr "Bruges hvis butikken ikke selv har en e-mail."
+
+#: includes/class-settings.php:167
+msgid "Pages & shop"
+msgstr "Sider & butik"
+
+#: includes/class-settings.php:168
+msgid "Where the silver shop lives on your site."
+msgstr "Hvor sølv-shoppen ligger på dit websted."
+
+#: includes/class-settings.php:169
+msgid "Silver category"
+msgstr "Sølv-kategori"
+
+#: includes/class-settings.php:171
+msgid "Booking page"
+msgstr "Booking-side"
+
+#: includes/class-settings.php:172
 msgid "Use the stores as pickup locations in checkout"
 msgstr "Brug butikkerne som afhentningssteder i checkout"
 
-#: includes/class-settings.php:127
+#: includes/class-settings.php:177
 msgid "Design"
 msgstr "Design"
 
-#: includes/class-settings.php:127
+#: includes/class-settings.php:178
+msgid "Look and feel for customers and staff."
+msgstr "Udseende for kunder og personale."
+
+#: includes/class-settings.php:179
 msgid "Use the silver design on silver categories and products"
 msgstr "Brug sølv-designet på sølvkategorier og -varer"
 
-#: includes/class-settings.php:128
+#: includes/class-settings.php:180
 msgid "Animations (respects visitors who prefer reduced motion)"
 msgstr "Animationer (respekterer besøgende, der ønsker færre bevægelser)"
 
-#: includes/class-settings.php:130
+#: includes/class-settings.php:181
+msgid "JustSilver design on the login page"
+msgstr "JustSilver-design på login-siden"
+
+#: includes/class-settings.php:184
 msgid "Save settings"
 msgstr "Gem indstillinger"
 
-#: includes/class-settings.php:140
-#: includes/class-settings.php:151
+#: includes/class-settings.php:193
+#: includes/class-settings.php:204
 msgid "No access"
 msgstr "Ingen adgang"
 
 #. translators: %s: price per kg
-#: includes/class-settings.php:145
+#: includes/class-settings.php:198
 #, php-format
 msgid "The silver price is now %s/kg. All silver products are being recalculated in the background."
 msgstr "Sølvprisen er nu %s/kg. Alle sølvvarer genberegnes i baggrunden."
 
 #. translators: %s: price per kg
-#: includes/class-settings.php:145
+#: includes/class-settings.php:198
 msgid "Invalid price."
 msgstr "Ugyldig pris."
 
@@ -1126,7 +1278,7 @@ msgstr "Brugt"
 msgid "Vintage"
 msgstr "Vintage"
 
-#: justsilver.php:57
+#: justsilver.php:58
 msgid "JustSilver requires WooCommerce to be installed and active."
 msgstr "JustSilver kræver, at WooCommerce er installeret og aktiveret."
 
@@ -1269,10 +1421,6 @@ msgstr "butikker"
 msgid "live prices"
 msgstr "live-priser"
 
-#: templates/landing.php:57
-msgid "since yesterday"
-msgstr "siden i går"
-
 #: templates/landing.php:68
 msgid "Prices from the live silver spot price"
 msgstr "Priser fra den aktuelle sølvkurs"
@@ -1355,10 +1503,6 @@ msgstr "Åben i dag %1$s–%2$s"
 msgid "Closed today"
 msgstr "Lukket i dag"
 
-#: templates/landing.php:135
-msgid "Closed"
-msgstr "Lukket"
-
 #: templates/landing.php:139
 msgid "Book here"
 msgstr "Book tid her"
@@ -1388,12 +1532,6 @@ msgstr "Opret prisalarm"
 #: templates/price-chart.php:11
 msgid "Silver price"
 msgstr "Sølvpris"
-
-#. translators: %d: number of days
-#: templates/price-chart.php:14
-#, php-format
-msgid "Last %d days"
-msgstr "Seneste %d dage"
 
 #: templates/price-chart.php:16
 #: assets/js/blocks.js:27
