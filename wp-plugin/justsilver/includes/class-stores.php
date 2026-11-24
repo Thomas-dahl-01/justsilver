@@ -1,13 +1,24 @@
 <?php
 /**
- * Butikker (afdelinger) med åbningstider, lukkedage og booking-kapacitet.
+ * Stores with opening hours, closed days and booking capacity.
  */
 defined( 'ABSPATH' ) || exit;
 
 class NS_Stores {
 
-	const CPT      = 'ns_store';
-	const WEEKDAYS = array( 1 => 'Mandag', 2 => 'Tirsdag', 3 => 'Onsdag', 4 => 'Torsdag', 5 => 'Fredag', 6 => 'Lørdag', 7 => 'Søndag' );
+	const CPT = 'ns_store';
+
+	public static function weekdays(): array {
+		return array(
+			1 => __( 'Monday', 'justsilver' ),
+			2 => __( 'Tuesday', 'justsilver' ),
+			3 => __( 'Wednesday', 'justsilver' ),
+			4 => __( 'Thursday', 'justsilver' ),
+			5 => __( 'Friday', 'justsilver' ),
+			6 => __( 'Saturday', 'justsilver' ),
+			7 => __( 'Sunday', 'justsilver' ),
+		);
+	}
 
 	public static function init(): void {
 		add_action( 'init', array( __CLASS__, 'register' ) );
@@ -19,20 +30,20 @@ class NS_Stores {
 
 	public static function register(): void {
 		register_post_type( self::CPT, array(
-			'labels'       => array(
-				'name'          => 'Butikker',
-				'singular_name' => 'Butik',
-				'add_new'       => 'Tilføj butik',
-				'add_new_item'  => 'Tilføj butik',
-				'edit_item'     => 'Rediger butik',
-				'menu_name'     => 'Butikker',
+			'labels'          => array(
+				'name'          => __( 'Stores', 'justsilver' ),
+				'singular_name' => __( 'Store', 'justsilver' ),
+				'add_new'       => __( 'Add store', 'justsilver' ),
+				'add_new_item'  => __( 'Add store', 'justsilver' ),
+				'edit_item'     => __( 'Edit store', 'justsilver' ),
+				'menu_name'     => __( 'Stores', 'justsilver' ),
 			),
-			'public'       => false,
-			'show_ui'      => true,
-			'show_in_menu' => 'edit.php?post_type=ns_booking',
-			'supports'     => array( 'title' ),
+			'public'          => false,
+			'show_ui'         => true,
+			'show_in_menu'    => 'edit.php?post_type=ns_booking',
+			'supports'        => array( 'title' ),
 			'capability_type' => 'page',
-			'map_meta_cap' => true,
+			'map_meta_cap'    => true,
 		) );
 	}
 
@@ -51,26 +62,29 @@ class NS_Stores {
 		if ( ! $post || self::CPT !== $post->post_type ) {
 			return array();
 		}
-		$m = fn( $k, $d = '' ) => ( '' !== ( $v = get_post_meta( $id, $k, true ) ) ) ? $v : $d;
+		$m = function ( $k, $d = '' ) use ( $id ) {
+			$v = get_post_meta( $id, $k, true );
+			return '' !== $v ? $v : $d;
+		};
 		return array(
-			'id'          => $id,
-			'name'        => $post->post_title,
-			'address'     => $m( '_ns_address' ),
-			'postcode'    => $m( '_ns_postcode' ),
-			'city'        => $m( '_ns_city' ),
-			'phone'       => $m( '_ns_phone' ),
-			'email'       => $m( '_ns_email' ),
-			'slot'        => max( 10, (int) $m( '_ns_slot_minutes', 30 ) ),
-			'capacity'    => max( 1, (int) $m( '_ns_capacity', 1 ) ),
-			'notice'      => max( 0, (int) $m( '_ns_notice_hours', 2 ) ),
-			'days_ahead'  => max( 1, (int) $m( '_ns_days_ahead', 30 ) ),
-			'hours'       => (array) $m( '_ns_hours', array() ),
-			'closed'      => array_filter( array_map( 'trim', explode( "\n", (string) $m( '_ns_closed_dates' ) ) ) ),
-			'active'      => 'no' !== $m( '_ns_active', 'yes' ),
+			'id'         => $id,
+			'name'       => $post->post_title,
+			'address'    => $m( '_ns_address' ),
+			'postcode'   => $m( '_ns_postcode' ),
+			'city'       => $m( '_ns_city' ),
+			'phone'      => $m( '_ns_phone' ),
+			'email'      => $m( '_ns_email' ),
+			'slot'       => max( 10, (int) $m( '_ns_slot_minutes', 30 ) ),
+			'capacity'   => max( 1, (int) $m( '_ns_capacity', 1 ) ),
+			'notice'     => max( 0, (int) $m( '_ns_notice_hours', 2 ) ),
+			'days_ahead' => max( 1, (int) $m( '_ns_days_ahead', 30 ) ),
+			'hours'      => (array) $m( '_ns_hours', array() ),
+			'closed'     => array_filter( array_map( 'trim', explode( "\n", (string) $m( '_ns_closed_dates' ) ) ) ),
+			'active'     => 'no' !== $m( '_ns_active', 'yes' ),
 		);
 	}
 
-	/** Åbningstid for en dato: [åbner, lukker] som "H:i" eller null hvis lukket. */
+	/** Opening hours for a date: [open, close] as "H:i", or null if closed. */
 	public static function hours_for( array $store, DateTimeImmutable $day ): ?array {
 		if ( in_array( $day->format( 'Y-m-d' ), $store['closed'], true ) ) {
 			return null;
@@ -84,8 +98,7 @@ class NS_Stores {
 
 	/** @return DateTimeImmutable[] */
 	public static function bookable_days( array $store ): array {
-		$tz    = wp_timezone();
-		$today = new DateTimeImmutable( 'today', $tz );
+		$today = new DateTimeImmutable( 'today', wp_timezone() );
 		$days  = array();
 		for ( $i = 0; $i <= $store['days_ahead']; $i++ ) {
 			$d = $today->modify( "+{$i} day" );
@@ -96,22 +109,39 @@ class NS_Stores {
 		return $days;
 	}
 
-	/** @return array<string,int> "H:i" => ledige pladser */
+	/** @return array<string,int> "H:i" => free places */
 	public static function available_slots( array $store, DateTimeImmutable $day ): array {
 		$hours = self::hours_for( $store, $day );
 		if ( ! $hours ) {
 			return array();
 		}
-		$tz       = wp_timezone();
-		$earliest = ( new DateTimeImmutable( 'now', $tz ) )->modify( '+' . $store['notice'] . ' hours' );
-		$taken    = NS_Bookings::taken_counts( $store['id'], $day->format( 'Y-m-d' ) );
-		$cur      = new DateTimeImmutable( $day->format( 'Y-m-d' ) . ' ' . $hours[0], $tz );
-		$end      = new DateTimeImmutable( $day->format( 'Y-m-d' ) . ' ' . $hours[1], $tz );
-		$step     = '+' . $store['slot'] . ' minutes';
-		$slots    = array();
+		$tz = wp_timezone();
+		return self::generate_slots(
+			$day->format( 'Y-m-d' ),
+			$hours[0],
+			$hours[1],
+			$store['slot'],
+			$store['capacity'],
+			NS_Bookings::taken_counts( $store['id'], $day->format( 'Y-m-d' ) ),
+			( new DateTimeImmutable( 'now', $tz ) )->modify( '+' . $store['notice'] . ' hours' ),
+			$tz
+		);
+	}
+
+	/**
+	 * Pure slot calculation (unit tested).
+	 *
+	 * @param array<string,int> $taken "H:i" => bookings already made
+	 * @return array<string,int> "H:i" => free places
+	 */
+	public static function generate_slots( string $date, string $open, string $close, int $slot_minutes, int $capacity, array $taken, DateTimeImmutable $earliest, DateTimeZone $tz ): array {
+		$cur   = new DateTimeImmutable( $date . ' ' . $open, $tz );
+		$end   = new DateTimeImmutable( $date . ' ' . $close, $tz );
+		$step  = '+' . max( 5, $slot_minutes ) . ' minutes';
+		$slots = array();
 		while ( $cur->modify( $step ) <= $end ) {
 			$t    = $cur->format( 'H:i' );
-			$free = $store['capacity'] - ( $taken[ $t ] ?? 0 );
+			$free = $capacity - ( $taken[ $t ] ?? 0 );
 			if ( $cur >= $earliest && $free > 0 ) {
 				$slots[ $t ] = $free;
 			}
@@ -123,7 +153,7 @@ class NS_Stores {
 	/* -------------------------------------------------------------- Admin */
 
 	public static function meta_boxes(): void {
-		add_meta_box( 'ns_store_details', 'Butiksoplysninger', array( __CLASS__, 'box' ), self::CPT, 'normal', 'high' );
+		add_meta_box( 'ns_store_details', __( 'Store details', 'justsilver' ), array( __CLASS__, 'box' ), self::CPT, 'normal', 'high' );
 	}
 
 	public static function box( WP_Post $post ): void {
@@ -134,37 +164,38 @@ class NS_Stores {
 				esc_html( $label ), esc_attr( $type ), esc_attr( $name ), esc_attr( $value ), $extra ); // phpcs:ignore WordPress.Security.EscapeOutput
 		};
 		echo '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">';
-		$field( 'ns_address', 'Adresse', $s['address'] );
-		$field( 'ns_phone', 'Telefon', $s['phone'] );
-		$field( 'ns_postcode', 'Postnr.', $s['postcode'] );
-		$field( 'ns_city', 'By', $s['city'] );
-		$field( 'ns_email', 'E-mail (modtager bookinger)', $s['email'], 'email' );
-		echo '<p><label style="display:block;font-weight:600"><input type="checkbox" name="ns_active" value="yes" ' . checked( $s['active'], true, false ) . '> Aktiv (kan bookes og vælges)</label></p>';
-		echo '</div><h3>Booking</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0 16px">';
-		$field( 'ns_slot_minutes', 'Varighed pr. tid (min.)', $s['slot'], 'number', 'min="10" step="5" style="width:100%"' );
-		$field( 'ns_capacity', 'Kunder pr. tidsrum', $s['capacity'], 'number', 'min="1" style="width:100%"' );
-		$field( 'ns_notice_hours', 'Mindste varsel (timer)', $s['notice'], 'number', 'min="0" style="width:100%"' );
-		$field( 'ns_days_ahead', 'Kan bookes dage frem', $s['days_ahead'], 'number', 'min="1" style="width:100%"' );
-		echo '</div><h3>Åbningstider</h3><table class="widefat striped" style="max-width:520px"><thead><tr><th>Dag</th><th>Åbner</th><th>Lukker</th></tr></thead><tbody>';
-		foreach ( self::WEEKDAYS as $n => $label ) {
+		$field( 'ns_address', __( 'Address', 'justsilver' ), $s['address'] );
+		$field( 'ns_phone', __( 'Phone', 'justsilver' ), $s['phone'] );
+		$field( 'ns_postcode', __( 'Postcode', 'justsilver' ), $s['postcode'] );
+		$field( 'ns_city', __( 'City', 'justsilver' ), $s['city'] );
+		$field( 'ns_email', __( 'Email (receives bookings)', 'justsilver' ), $s['email'], 'email' );
+		echo '<p><label style="display:block;font-weight:600"><input type="checkbox" name="ns_active" value="yes" ' . checked( $s['active'], true, false ) . '> ' . esc_html__( 'Active (can be booked and chosen)', 'justsilver' ) . '</label></p>';
+		echo '</div><h3>' . esc_html__( 'Booking', 'justsilver' ) . '</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0 16px">';
+		$field( 'ns_slot_minutes', __( 'Length per visit (min.)', 'justsilver' ), $s['slot'], 'number', 'min="10" step="5" style="width:100%"' );
+		$field( 'ns_capacity', __( 'Customers per slot', 'justsilver' ), $s['capacity'], 'number', 'min="1" style="width:100%"' );
+		$field( 'ns_notice_hours', __( 'Minimum notice (hours)', 'justsilver' ), $s['notice'], 'number', 'min="0" style="width:100%"' );
+		$field( 'ns_days_ahead', __( 'Bookable days ahead', 'justsilver' ), $s['days_ahead'], 'number', 'min="1" style="width:100%"' );
+		echo '</div><h3>' . esc_html__( 'Opening hours', 'justsilver' ) . '</h3><table class="widefat striped" style="max-width:520px"><thead><tr><th>' . esc_html__( 'Day', 'justsilver' ) . '</th><th>' . esc_html__( 'Opens', 'justsilver' ) . '</th><th>' . esc_html__( 'Closes', 'justsilver' ) . '</th></tr></thead><tbody>';
+		foreach ( self::weekdays() as $n => $label ) {
 			$h = $s['hours'][ $n ] ?? array( 'open' => '', 'close' => '' );
 			printf( '<tr><td>%s</td><td><input type="time" name="ns_hours[%d][open]" value="%s"></td><td><input type="time" name="ns_hours[%d][close]" value="%s"></td></tr>',
-				esc_html( $label ), $n, esc_attr( $h['open'] ?? '' ), $n, esc_attr( $h['close'] ?? '' ) );
+				esc_html( $label ), (int) $n, esc_attr( $h['open'] ?? '' ), (int) $n, esc_attr( $h['close'] ?? '' ) );
 		}
-		echo '</tbody></table><p class="description">Lad felterne stå tomme på lukkedage.</p>';
-		printf( '<h3>Lukkedage</h3><textarea name="ns_closed_dates" rows="4" class="large-text code" placeholder="2026-12-24&#10;2026-12-25">%s</textarea><p class="description">Én dato pr. linje (ÅÅÅÅ-MM-DD), fx helligdage.</p>',
-			esc_textarea( implode( "\n", $s['closed'] ) ) );
+		echo '</tbody></table><p class="description">' . esc_html__( 'Leave both fields empty on days the store is closed.', 'justsilver' ) . '</p>';
+		printf( '<h3>%s</h3><textarea name="ns_closed_dates" rows="4" class="large-text code" placeholder="2026-12-24&#10;2026-12-25">%s</textarea><p class="description">%s</p>',
+			esc_html__( 'Closed days', 'justsilver' ),
+			esc_textarea( implode( "\n", $s['closed'] ) ),
+			esc_html__( 'One date per line (YYYY-MM-DD), e.g. public holidays.', 'justsilver' ) );
 	}
 
 	public static function save( int $post_id, WP_Post $post ): void {
 		if ( ! isset( $_POST['ns_store_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['ns_store_nonce'] ), 'ns_store_save' ) ) {
 			return;
 		}
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE || ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
-		$text = array( 'ns_address', 'ns_postcode', 'ns_city', 'ns_phone' );
-		foreach ( $text as $k ) {
+		foreach ( array( 'ns_address', 'ns_postcode', 'ns_city', 'ns_phone' ) as $k ) {
 			update_post_meta( $post_id, '_' . $k, sanitize_text_field( wp_unslash( $_POST[ $k ] ?? '' ) ) );
 		}
 		update_post_meta( $post_id, '_ns_email', sanitize_email( wp_unslash( $_POST['ns_email'] ?? '' ) ) );
@@ -184,10 +215,7 @@ class NS_Stores {
 		self::sync_pickup_locations();
 	}
 
-	/**
-	 * Hold WooCommerce' "Lokal afhentning"-steder (checkout-blokken) i sync med butikkerne,
-	 * så kunden kan vælge afhentningsbutik ved køb.
-	 */
+	/** Keep WooCommerce' "Local pickup" locations in sync with the stores. */
 	public static function sync_pickup_locations(): void {
 		if ( 'yes' !== ns_opt( 'sync_pickup', 'yes' ) ) {
 			return;
@@ -198,7 +226,8 @@ class NS_Stores {
 			$locations[] = array(
 				'name'    => $s['name'],
 				'address' => array( 'address_1' => $s['address'], 'city' => $s['city'], 'state' => '', 'postcode' => $s['postcode'], 'country' => 'DK' ),
-				'details' => $s['phone'] ? 'Tlf. ' . $s['phone'] : '',
+				/* translators: %s: phone number */
+				'details' => $s['phone'] ? sprintf( __( 'Phone %s', 'justsilver' ), $s['phone'] ) : '',
 				'enabled' => true,
 			);
 		}
@@ -206,7 +235,14 @@ class NS_Stores {
 	}
 
 	public static function columns( array $cols ): array {
-		return array( 'cb' => $cols['cb'], 'title' => 'Butik', 'ns_addr' => 'Adresse', 'ns_phone' => 'Telefon', 'ns_cap' => 'Kapacitet', 'ns_active' => 'Aktiv' );
+		return array(
+			'cb'        => $cols['cb'],
+			'title'     => __( 'Store', 'justsilver' ),
+			'ns_addr'   => __( 'Address', 'justsilver' ),
+			'ns_phone'  => __( 'Phone', 'justsilver' ),
+			'ns_cap'    => __( 'Capacity', 'justsilver' ),
+			'ns_active' => __( 'Active', 'justsilver' ),
+		);
 	}
 
 	public static function column( string $col, int $id ): void {
@@ -219,7 +255,8 @@ class NS_Stores {
 				echo esc_html( $s['phone'] );
 				break;
 			case 'ns_cap':
-				echo esc_html( $s['capacity'] . ' kunde(r) / ' . $s['slot'] . ' min.' );
+				/* translators: 1: customers, 2: minutes */
+				echo esc_html( sprintf( __( '%1$d customer(s) / %2$d min.', 'justsilver' ), $s['capacity'], $s['slot'] ) );
 				break;
 			case 'ns_active':
 				echo $s['active'] ? '✓' : '–';

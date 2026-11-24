@@ -14,6 +14,7 @@ $W option update woocommerce_default_country DK
 $W option update woocommerce_price_thousand_sep .
 $W option update woocommerce_price_decimal_sep ,
 $W option update woocommerce_price_num_decimals 0
+$W option update woocommerce_coming_soon no
 $W theme install storefront --activate
 $W plugin activate justsilver
 $W justsilver seed --stores

@@ -1,0 +1,1432 @@
+# Copyright (C) 2026 Thomas-dahl-01
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: JustSilver 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/justsilver\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-24T11:55:41+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: justsilver\n"
+
+#. Plugin Name of the plugin
+#: justsilver.php
+msgid "JustSilver"
+msgstr ""
+
+#. Description of the plugin
+#: justsilver.php
+msgid "Turns WooCommerce into a silver shop: prices follow the daily silver spot price (updated automatically), stores with opening hours, appointment booking with product reservation, price chart, price alerts, a sell-your-silver calculator and Gutenberg blocks."
+msgstr ""
+
+#. Author of the plugin
+#: justsilver.php
+msgid "Thomas-dahl-01"
+msgstr ""
+
+#: includes/class-alerts.php:24
+#: includes/class-alerts.php:26
+msgid "Price alerts"
+msgstr ""
+
+#: includes/class-alerts.php:25
+#: includes/class-blocks.php:17
+#: templates/price-alert.php:11
+msgid "Price alert"
+msgstr ""
+
+#: includes/class-alerts.php:54
+msgid "Your price alert has been removed."
+msgstr ""
+
+#: includes/class-alerts.php:71
+msgid "Please enter a valid email and price, and accept that we may email you."
+msgstr ""
+
+#: includes/class-alerts.php:77
+msgid "You already have 5 price alerts. Remove one before adding another."
+msgstr ""
+
+#. translators: 1: email, 2: price per gram
+#: includes/class-alerts.php:85
+#, php-format
+msgid "%1$s – %2$s kr/g"
+msgstr ""
+
+#. translators: %s: price per gram
+#: includes/class-alerts.php:89
+#, php-format
+msgid "Done! We will email you when silver is %s kr/g or lower."
+msgstr ""
+
+#. translators: 1: current price per gram, 2: target price per gram
+#: includes/class-alerts.php:112
+#, php-format
+msgid "Silver is now %1$s kr/g – at or below your alert of %2$s kr/g."
+msgstr ""
+
+#: includes/class-alerts.php:113
+msgid "See silver at today’s price"
+msgstr ""
+
+#: includes/class-alerts.php:114
+msgid "This alert has now been used and removed. You can set a new one at any time."
+msgstr ""
+
+#: includes/class-alerts.php:115
+msgid "Price alert: silver has reached your price"
+msgstr ""
+
+#: includes/class-alerts.php:115
+msgid "Your silver price alert"
+msgstr ""
+
+#: includes/class-alerts.php:126
+msgid "Alert"
+msgstr ""
+
+#: includes/class-alerts.php:126
+msgid "Target price"
+msgstr ""
+
+#: includes/class-blocks.php:13
+#: includes/class-settings.php:118
+msgid "Silver front page"
+msgstr ""
+
+#: includes/class-blocks.php:13
+msgid "Hero with live price, categories, chart, popular items and stores."
+msgstr ""
+
+#: includes/class-blocks.php:14
+msgid "Appointment booking"
+msgstr ""
+
+#: includes/class-blocks.php:14
+msgid "Customers choose store, day and time."
+msgstr ""
+
+#: includes/class-blocks.php:15
+msgid "Silver price ticker"
+msgstr ""
+
+#: includes/class-blocks.php:15
+msgid "Today’s price with change since yesterday."
+msgstr ""
+
+#: includes/class-blocks.php:16
+#: templates/price-chart.php:23
+msgid "Silver price chart"
+msgstr ""
+
+#: includes/class-blocks.php:16
+msgid "Interactive chart of the silver price."
+msgstr ""
+
+#: includes/class-blocks.php:17
+msgid "Email me when silver reaches my price."
+msgstr ""
+
+#: includes/class-blocks.php:18
+msgid "Sell your silver"
+msgstr ""
+
+#: includes/class-blocks.php:18
+msgid "Instant offer for the customer’s silver."
+msgstr ""
+
+#: includes/class-bookings.php:14
+msgid "See and buy silver"
+msgstr ""
+
+#: includes/class-bookings.php:15
+msgid "Sell silver"
+msgstr ""
+
+#: includes/class-bookings.php:16
+msgid "Free valuation"
+msgstr ""
+
+#: includes/class-bookings.php:17
+msgid "Investment advice"
+msgstr ""
+
+#: includes/class-bookings.php:23
+msgid "Booked"
+msgstr ""
+
+#: includes/class-bookings.php:24
+msgid "Confirmed"
+msgstr ""
+
+#: includes/class-bookings.php:25
+msgid "Completed"
+msgstr ""
+
+#: includes/class-bookings.php:26
+msgid "No-show"
+msgstr ""
+
+#: includes/class-bookings.php:27
+msgid "Cancelled"
+msgstr ""
+
+#: includes/class-bookings.php:50
+msgid "Bookings"
+msgstr ""
+
+#: includes/class-bookings.php:51
+#: includes/class-bookings.php:56
+#: includes/class-bookings.php:456
+#: includes/class-stores.php:173
+msgid "Booking"
+msgstr ""
+
+#: includes/class-bookings.php:52
+msgid "Silver bookings"
+msgstr ""
+
+#: includes/class-bookings.php:53
+msgid "All bookings"
+msgstr ""
+
+#: includes/class-bookings.php:54
+#: includes/class-bookings.php:55
+msgid "Add booking"
+msgstr ""
+
+#: includes/class-bookings.php:150
+msgid "The page had expired – please try again."
+msgstr ""
+
+#: includes/class-bookings.php:163
+msgid "Sorry, that time is no longer available. Please choose another."
+msgstr ""
+
+#: includes/class-bookings.php:166
+msgid "Please enter your name."
+msgstr ""
+
+#: includes/class-bookings.php:169
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: includes/class-bookings.php:172
+msgid "Please enter a valid phone number."
+msgstr ""
+
+#: includes/class-bookings.php:188
+msgid "Someone just took that time. Please choose a new one."
+msgstr ""
+
+#: includes/class-bookings.php:213
+msgid "The booking could not be saved. Please call us."
+msgstr ""
+
+#: includes/class-bookings.php:233
+msgid "Your booking has been cancelled."
+msgstr ""
+
+#. translators: 1: date, 2: time
+#: includes/class-bookings.php:269
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#. translators: %s: store name
+#: includes/class-bookings.php:283
+#, php-format
+msgid "Visit at %s"
+msgstr ""
+
+#: includes/class-bookings.php:296
+#: templates/booking-done.php:18
+msgid "reserved for you"
+msgstr ""
+
+#: includes/class-bookings.php:299
+msgid "We will have these items ready for you:"
+msgstr ""
+
+#. translators: %s: name
+#: includes/class-bookings.php:311
+#: includes/class-reminders.php:47
+#, php-format
+msgid "Hi %s"
+msgstr ""
+
+#. translators: %s: name
+#: includes/class-bookings.php:312
+msgid "Thank you for your booking. We look forward to seeing you."
+msgstr ""
+
+#: includes/class-bookings.php:313
+#: includes/class-reminders.php:49
+msgid "When:"
+msgstr ""
+
+#: includes/class-bookings.php:314
+#: includes/class-reminders.php:50
+msgid "Where:"
+msgstr ""
+
+#: includes/class-bookings.php:315
+#: includes/class-bookings.php:324
+msgid "Purpose:"
+msgstr ""
+
+#: includes/class-bookings.php:317
+msgid "The attached calendar file adds the visit to your calendar. Remember valid photo ID when buying or selling."
+msgstr ""
+
+#: includes/class-bookings.php:318
+#: includes/class-reminders.php:52
+msgid "Can’t make it? Cancel your booking"
+msgstr ""
+
+#: includes/class-bookings.php:319
+msgid "Your visit to JustSilver is booked"
+msgstr ""
+
+#: includes/class-bookings.php:319
+msgid "Your visit is booked"
+msgstr ""
+
+#: includes/class-bookings.php:322
+msgid "has booked a visit."
+msgstr ""
+
+#: includes/class-bookings.php:325
+msgid "Phone:"
+msgstr ""
+
+#: includes/class-bookings.php:326
+msgid "Email:"
+msgstr ""
+
+#: includes/class-bookings.php:327
+msgid "Note:"
+msgstr ""
+
+#: includes/class-bookings.php:329
+msgid "Open the booking"
+msgstr ""
+
+#. translators: 1: customer name, 2: date and time
+#: includes/class-bookings.php:331
+#, php-format
+msgid "New booking: %1$s – %2$s"
+msgstr ""
+
+#. translators: 1: customer name, 2: date and time
+#: includes/class-bookings.php:331
+msgid "New silver booking"
+msgstr ""
+
+#: includes/class-bookings.php:370
+#: templates/booking-form.php:19
+#: templates/booking-form.php:105
+msgid "Time"
+msgstr ""
+
+#: includes/class-bookings.php:371
+msgid "Customer"
+msgstr ""
+
+#: includes/class-bookings.php:372
+#: includes/class-bookings.php:462
+#: includes/class-stores.php:35
+#: includes/class-stores.php:240
+#: templates/booking-form.php:19
+#: templates/booking-form.php:103
+msgid "Store"
+msgstr ""
+
+#: includes/class-bookings.php:373
+#: includes/class-bookings.php:473
+msgid "Purpose"
+msgstr ""
+
+#: includes/class-bookings.php:374
+msgid "Contact"
+msgstr ""
+
+#: includes/class-bookings.php:375
+msgid "Items"
+msgstr ""
+
+#: includes/class-bookings.php:376
+#: includes/class-bookings.php:468
+msgid "Status"
+msgstr ""
+
+#: includes/class-bookings.php:416
+msgid "Upcoming"
+msgstr ""
+
+#: includes/class-bookings.php:416
+msgid "Today"
+msgstr ""
+
+#: includes/class-bookings.php:416
+msgid "All dates"
+msgstr ""
+
+#: includes/class-bookings.php:419
+msgid "All stores"
+msgstr ""
+
+#: includes/class-bookings.php:423
+msgid "All statuses"
+msgstr ""
+
+#: includes/class-bookings.php:467
+msgid "Date / time"
+msgstr ""
+
+#: includes/class-bookings.php:472
+msgid "Cancelled or no-show releases reserved items back to stock."
+msgstr ""
+
+#: includes/class-bookings.php:479
+#: templates/booking-form.php:87
+msgid "Name"
+msgstr ""
+
+#: includes/class-bookings.php:479
+#: templates/booking-form.php:89
+#: templates/price-alert.php:20
+msgid "Email"
+msgstr ""
+
+#: includes/class-bookings.php:479
+#: includes/class-stores.php:168
+#: includes/class-stores.php:242
+#: templates/booking-form.php:90
+msgid "Phone"
+msgstr ""
+
+#: includes/class-bookings.php:482
+#: templates/booking-form.php:92
+msgid "Note"
+msgstr ""
+
+#: includes/class-bookings.php:483
+msgid "Items the customer wants to see"
+msgstr ""
+
+#: includes/class-bookings.php:485
+msgid "reserved"
+msgstr ""
+
+#: includes/class-bookings.php:486
+msgid "stock"
+msgstr ""
+
+#: includes/class-frontend.php:33
+#: templates/price-chart.php:18
+msgid "days"
+msgstr ""
+
+#: includes/class-frontend.php:34
+msgid "kr/g"
+msgstr ""
+
+#: includes/class-frontend.php:35
+msgid "fine silver"
+msgstr ""
+
+#. translators: %s: purity, e.g. 999
+#: includes/class-frontend.php:105
+#, php-format
+msgid "Purity %s"
+msgstr ""
+
+#. translators: %s: weight of fine silver
+#. translators: %s: grams of fine silver
+#: includes/class-frontend.php:107
+#: templates/sell-calculator.php:27
+#, php-format
+msgid "%s fine silver"
+msgstr ""
+
+#. translators: %s: date and time
+#: includes/class-frontend.php:114
+#, php-format
+msgid "Price follows the silver spot price (updated %s)."
+msgstr ""
+
+#: includes/class-frontend.php:115
+msgid "Price follows the silver spot price."
+msgstr ""
+
+#: includes/class-frontend.php:126
+msgid "Book a visit – we’ll reserve it for you"
+msgstr ""
+
+#: includes/class-frontend.php:127
+msgid "Book a visit and see it in store"
+msgstr ""
+
+#: includes/class-frontend.php:136
+#: includes/class-installer.php:45
+#: templates/landing.php:40
+#: templates/landing.php:117
+msgid "Book a visit"
+msgstr ""
+
+#: includes/class-frontend.php:146
+msgid "Popular"
+msgstr ""
+
+#. translators: %d: items left
+#: includes/class-frontend.php:150
+#, php-format
+msgid "Only %d left"
+msgstr ""
+
+#: includes/class-frontend.php:160
+#: includes/class-product-fields.php:90
+msgid "Condition"
+msgstr ""
+
+#: includes/class-frontend.php:163
+#: includes/class-product-fields.php:87
+msgid "Year"
+msgstr ""
+
+#: includes/class-frontend.php:242
+#: includes/class-installer.php:30
+#: includes/class-installer.php:48
+#: includes/class-product-fields.php:47
+#: includes/class-product-fields.php:213
+msgid "Silver"
+msgstr ""
+
+#: includes/class-installer.php:12
+msgid "Silver bars"
+msgstr ""
+
+#: includes/class-installer.php:12
+msgid "Cast and minted bars from 1 g to 5 kg – the cheapest way to physical silver per gram."
+msgstr ""
+
+#: includes/class-installer.php:13
+msgid "Silver coins"
+msgstr ""
+
+#: includes/class-installer.php:13
+msgid "Bullion coins such as Maple Leaf, Britannia and Philharmoniker – several years and tubes."
+msgstr ""
+
+#: includes/class-installer.php:14
+msgid "Granules & bulk"
+msgstr ""
+
+#: includes/class-installer.php:14
+msgid "Silver granules and larger lots for the most metal for your money."
+msgstr ""
+
+#: includes/class-installer.php:15
+#: includes/helpers.php:37
+msgid "Jewellery"
+msgstr ""
+
+#: includes/class-installer.php:15
+msgid "Sterling silver jewellery – rings, chains, bracelets and pendants, new and pre-owned."
+msgstr ""
+
+#: includes/class-installer.php:16
+#: includes/helpers.php:38
+msgid "Cutlery & tableware"
+msgstr ""
+
+#: includes/class-installer.php:16
+msgid "Danish silver cutlery in classic patterns. Buy single pieces and complete your set."
+msgstr ""
+
+#: includes/class-installer.php:17
+msgid "Antiques & collectibles"
+msgstr ""
+
+#: includes/class-installer.php:17
+msgid "Candlesticks, bowls and jugs with a history – selected and valued by our experts."
+msgstr ""
+
+#: includes/class-installer.php:31
+msgctxt "category slug"
+msgid "silver"
+msgstr ""
+
+#: includes/class-installer.php:31
+msgid "Bullion silver, coins, jewellery and tableware – priced from today’s silver spot price."
+msgstr ""
+
+#: includes/class-installer.php:45
+msgctxt "page slug"
+msgid "book-a-visit"
+msgstr ""
+
+#: includes/class-installer.php:48
+msgctxt "page slug"
+msgid "silver-shop"
+msgstr ""
+
+#: includes/class-price-api.php:41
+msgid "Invalid price received."
+msgstr ""
+
+#. translators: 1: new price per kg, 2: current price per kg
+#: includes/class-price-api.php:46
+#, php-format
+msgid "The price %1$s/kg differed more than 20%% from %2$s/kg and was not used. Check it and set it manually."
+msgstr ""
+
+#. translators: %s: price per kg
+#: includes/class-price-api.php:50
+#, php-format
+msgid "Silver price updated: %s per kg"
+msgstr ""
+
+#: includes/class-price-api.php:57
+msgid "No API key has been set up."
+msgstr ""
+
+#. translators: %s: error from the price API
+#: includes/class-price-api.php:68
+#, php-format
+msgid "Price API failed: %s"
+msgstr ""
+
+#: includes/class-price-api.php:81
+msgid "The price API answered without an XAG rate."
+msgstr ""
+
+#: includes/class-product-fields.php:15
+msgid "Silver type"
+msgstr ""
+
+#: includes/class-product-fields.php:16
+#: includes/class-product-fields.php:82
+#: templates/sell-calculator.php:17
+msgid "Purity"
+msgstr ""
+
+#: includes/class-product-fields.php:17
+msgid "Mint"
+msgstr ""
+
+#: includes/class-product-fields.php:18
+msgid "Weight"
+msgstr ""
+
+#: includes/class-product-fields.php:61
+msgid "Silver product"
+msgstr ""
+
+#: includes/class-product-fields.php:62
+msgid "Tick to price and show this product as silver."
+msgstr ""
+
+#: includes/class-product-fields.php:67
+msgid "Type"
+msgstr ""
+
+#: includes/class-product-fields.php:68
+#: includes/class-settings.php:117
+#: includes/class-settings.php:118
+#: includes/class-settings.php:119
+msgid "– choose –"
+msgstr ""
+
+#: includes/class-product-fields.php:73
+#: templates/sell-calculator.php:15
+msgid "Weight (grams)"
+msgstr ""
+
+#: includes/class-product-fields.php:77
+msgid "Gross weight. 1 oz = 31.10 g."
+msgstr ""
+
+#: includes/class-product-fields.php:86
+msgid "Mint / maker"
+msgstr ""
+
+#: includes/class-product-fields.php:97
+msgid "Pricing"
+msgstr ""
+
+#: includes/class-product-fields.php:99
+msgid "Spot price + premium (automatic)"
+msgstr ""
+
+#: includes/class-product-fields.php:100
+msgid "Fixed price (use the General tab)"
+msgstr ""
+
+#: includes/class-product-fields.php:106
+msgid "Premium over spot (%)"
+msgstr ""
+
+#: includes/class-product-fields.php:111
+msgid "Empty = the default premium from the settings."
+msgstr ""
+
+#: includes/class-product-fields.php:116
+msgid "Can be seen in store"
+msgstr ""
+
+#: includes/class-product-fields.php:117
+msgid "Show the \"Book a visit and see it in store\" button."
+msgstr ""
+
+#: includes/class-product-fields.php:121
+msgid "Spot price"
+msgstr ""
+
+#. translators: %s: price per kg
+#: includes/class-product-fields.php:124
+#: templates/landing.php:59
+#, php-format
+msgid "%s per kg fine silver"
+msgstr ""
+
+#: includes/class-product-fields.php:125
+msgid "Not set – see WooCommerce → JustSilver"
+msgstr ""
+
+#: includes/class-product-fields.php:228
+msgid "fixed price"
+msgstr ""
+
+#: includes/class-product-fields.php:228
+msgid "spot price"
+msgstr ""
+
+#: includes/class-product-fields.php:236
+msgid "Silver: silver product (yes/no)"
+msgstr ""
+
+#: includes/class-product-fields.php:237
+msgid "Silver: type"
+msgstr ""
+
+#: includes/class-product-fields.php:238
+msgid "Silver: weight (g)"
+msgstr ""
+
+#: includes/class-product-fields.php:239
+msgid "Silver: purity"
+msgstr ""
+
+#: includes/class-product-fields.php:240
+msgid "Silver: mint"
+msgstr ""
+
+#: includes/class-product-fields.php:241
+msgid "Silver: year"
+msgstr ""
+
+#: includes/class-product-fields.php:242
+msgid "Silver: condition"
+msgstr ""
+
+#: includes/class-product-fields.php:243
+msgid "Silver: pricing (spot/fast)"
+msgstr ""
+
+#: includes/class-product-fields.php:244
+msgid "Silver: premium %"
+msgstr ""
+
+#: includes/class-product-fields.php:245
+msgid "Silver: can be seen in store (yes/no)"
+msgstr ""
+
+#. translators: %s: name
+#: includes/class-reminders.php:48
+msgid "A friendly reminder that we are expecting you tomorrow."
+msgstr ""
+
+#: includes/class-reminders.php:53
+msgid "Reminder: your visit to JustSilver tomorrow"
+msgstr ""
+
+#: includes/class-reminders.php:53
+msgid "See you tomorrow"
+msgstr ""
+
+#: includes/class-settings.php:14
+#: includes/class-settings.php:105
+msgid "Settings"
+msgstr ""
+
+#: includes/class-settings.php:69
+#: templates/landing.php:54
+msgid "Today’s silver price"
+msgstr ""
+
+#: includes/class-settings.php:70
+msgid "per kg fine silver"
+msgstr ""
+
+#. translators: %s: date and time
+#: includes/class-settings.php:74
+#, php-format
+msgid "Updated %s"
+msgstr ""
+
+#. translators: %s: date and time
+#: includes/class-settings.php:74
+msgid "Not set yet."
+msgstr ""
+
+#. translators: %d: jobs
+#: includes/class-settings.php:78
+#, php-format
+msgid "Prices are being recalculated in the background (%d jobs queued)."
+msgstr ""
+
+#: includes/class-settings.php:83
+msgid "Set manually"
+msgstr ""
+
+#: includes/class-settings.php:88
+msgid "Fetch price from API now"
+msgstr ""
+
+#. translators: %s: date and time
+#: includes/class-settings.php:91
+#, php-format
+msgid "Last API call (%s):"
+msgstr ""
+
+#: includes/class-settings.php:94
+msgid "History"
+msgstr ""
+
+#: includes/class-settings.php:107
+msgid "Default premium over spot"
+msgstr ""
+
+#: includes/class-settings.php:108
+msgid "Used when a product has no premium of its own."
+msgstr ""
+
+#: includes/class-settings.php:109
+msgid "Buy-back margin"
+msgstr ""
+
+#: includes/class-settings.php:110
+msgid "The sell calculator offers the spot value minus this margin."
+msgstr ""
+
+#: includes/class-settings.php:111
+msgid "API key (metalpriceapi.com)"
+msgstr ""
+
+#: includes/class-settings.php:112
+msgid "Empty = manual price only."
+msgstr ""
+
+#: includes/class-settings.php:113
+msgid "Update price"
+msgstr ""
+
+#: includes/class-settings.php:114
+msgid "Every hour"
+msgstr ""
+
+#: includes/class-settings.php:114
+msgid "Twice a day"
+msgstr ""
+
+#: includes/class-settings.php:114
+msgid "Daily"
+msgstr ""
+
+#: includes/class-settings.php:114
+msgid "Never (manual only)"
+msgstr ""
+
+#: includes/class-settings.php:117
+msgid "Silver category"
+msgstr ""
+
+#: includes/class-settings.php:119
+msgid "Booking page"
+msgstr ""
+
+#: includes/class-settings.php:120
+msgid "Send bookings to"
+msgstr ""
+
+#: includes/class-settings.php:121
+msgid "Used when the store has no email of its own."
+msgstr ""
+
+#: includes/class-settings.php:122
+msgid "Reservations"
+msgstr ""
+
+#: includes/class-settings.php:122
+msgid "Reserve the items a customer books to see"
+msgstr ""
+
+#: includes/class-settings.php:123
+msgid "Release after"
+msgstr ""
+
+#: includes/class-settings.php:123
+msgid "days if the visit is not marked completed."
+msgstr ""
+
+#: includes/class-settings.php:124
+msgid "Reminders"
+msgstr ""
+
+#: includes/class-settings.php:124
+msgid "Email customers the day before their visit"
+msgstr ""
+
+#: includes/class-settings.php:125
+msgid "Send from"
+msgstr ""
+
+#: includes/class-settings.php:125
+msgid "o’clock"
+msgstr ""
+
+#: includes/class-settings.php:126
+msgid "Pickup"
+msgstr ""
+
+#: includes/class-settings.php:126
+msgid "Use the stores as pickup locations in checkout"
+msgstr ""
+
+#: includes/class-settings.php:127
+msgid "Design"
+msgstr ""
+
+#: includes/class-settings.php:127
+msgid "Use the silver design on silver categories and products"
+msgstr ""
+
+#: includes/class-settings.php:128
+msgid "Animations (respects visitors who prefer reduced motion)"
+msgstr ""
+
+#: includes/class-settings.php:130
+msgid "Save settings"
+msgstr ""
+
+#: includes/class-settings.php:140
+#: includes/class-settings.php:151
+msgid "No access"
+msgstr ""
+
+#. translators: %s: price per kg
+#: includes/class-settings.php:145
+#, php-format
+msgid "The silver price is now %s/kg. All silver products are being recalculated in the background."
+msgstr ""
+
+#. translators: %s: price per kg
+#: includes/class-settings.php:145
+msgid "Invalid price."
+msgstr ""
+
+#: includes/class-stores.php:13
+msgid "Monday"
+msgstr ""
+
+#: includes/class-stores.php:14
+msgid "Tuesday"
+msgstr ""
+
+#: includes/class-stores.php:15
+msgid "Wednesday"
+msgstr ""
+
+#: includes/class-stores.php:16
+msgid "Thursday"
+msgstr ""
+
+#: includes/class-stores.php:17
+msgid "Friday"
+msgstr ""
+
+#: includes/class-stores.php:18
+msgid "Saturday"
+msgstr ""
+
+#: includes/class-stores.php:19
+msgid "Sunday"
+msgstr ""
+
+#: includes/class-stores.php:34
+#: includes/class-stores.php:39
+msgid "Stores"
+msgstr ""
+
+#: includes/class-stores.php:36
+#: includes/class-stores.php:37
+msgid "Add store"
+msgstr ""
+
+#: includes/class-stores.php:38
+msgid "Edit store"
+msgstr ""
+
+#: includes/class-stores.php:156
+msgid "Store details"
+msgstr ""
+
+#: includes/class-stores.php:167
+#: includes/class-stores.php:241
+msgid "Address"
+msgstr ""
+
+#: includes/class-stores.php:169
+msgid "Postcode"
+msgstr ""
+
+#: includes/class-stores.php:170
+msgid "City"
+msgstr ""
+
+#: includes/class-stores.php:171
+msgid "Email (receives bookings)"
+msgstr ""
+
+#: includes/class-stores.php:172
+msgid "Active (can be booked and chosen)"
+msgstr ""
+
+#: includes/class-stores.php:174
+msgid "Length per visit (min.)"
+msgstr ""
+
+#: includes/class-stores.php:175
+msgid "Customers per slot"
+msgstr ""
+
+#: includes/class-stores.php:176
+msgid "Minimum notice (hours)"
+msgstr ""
+
+#: includes/class-stores.php:177
+msgid "Bookable days ahead"
+msgstr ""
+
+#: includes/class-stores.php:178
+#: templates/landing.php:132
+msgid "Opening hours"
+msgstr ""
+
+#: includes/class-stores.php:178
+#: templates/booking-form.php:19
+#: templates/booking-form.php:104
+msgid "Day"
+msgstr ""
+
+#: includes/class-stores.php:178
+msgid "Opens"
+msgstr ""
+
+#: includes/class-stores.php:178
+msgid "Closes"
+msgstr ""
+
+#: includes/class-stores.php:184
+msgid "Leave both fields empty on days the store is closed."
+msgstr ""
+
+#: includes/class-stores.php:186
+msgid "Closed days"
+msgstr ""
+
+#: includes/class-stores.php:188
+msgid "One date per line (YYYY-MM-DD), e.g. public holidays."
+msgstr ""
+
+#. translators: %s: phone number
+#: includes/class-stores.php:230
+#, php-format
+msgid "Phone %s"
+msgstr ""
+
+#: includes/class-stores.php:243
+msgid "Capacity"
+msgstr ""
+
+#: includes/class-stores.php:244
+msgid "Active"
+msgstr ""
+
+#. translators: 1: customers, 2: minutes
+#: includes/class-stores.php:259
+#, php-format
+msgid "%1$d customer(s) / %2$d min."
+msgstr ""
+
+#: includes/helpers.php:34
+msgid "Bar"
+msgstr ""
+
+#: includes/helpers.php:35
+msgid "Coin"
+msgstr ""
+
+#: includes/helpers.php:36
+msgid "Granules"
+msgstr ""
+
+#: includes/helpers.php:39
+msgid "Antique & collectible"
+msgstr ""
+
+#: includes/helpers.php:46
+msgid "999 (fine silver)"
+msgstr ""
+
+#: includes/helpers.php:47
+msgid "958 (Britannia)"
+msgstr ""
+
+#: includes/helpers.php:48
+msgid "925 (sterling)"
+msgstr ""
+
+#: includes/helpers.php:51
+msgid "830 (Danish silver)"
+msgstr ""
+
+#: includes/helpers.php:58
+msgid "New"
+msgstr ""
+
+#: includes/helpers.php:59
+msgid "As new"
+msgstr ""
+
+#: includes/helpers.php:60
+msgid "Used"
+msgstr ""
+
+#: includes/helpers.php:61
+msgid "Vintage"
+msgstr ""
+
+#: justsilver.php:57
+msgid "JustSilver requires WooCommerce to be installed and active."
+msgstr ""
+
+#: templates/booking-cancel.php:11
+msgid "This booking is already cancelled"
+msgstr ""
+
+#: templates/booking-cancel.php:13
+msgid "Cancel your booking?"
+msgstr ""
+
+#: templates/booking-cancel.php:19
+msgid "Yes, cancel the booking"
+msgstr ""
+
+#: templates/booking-cancel.php:20
+msgid "No, keep it"
+msgstr ""
+
+#. translators: %s: weekday
+#: templates/booking-done.php:12
+#, php-format
+msgid "See you on %s!"
+msgstr ""
+
+#. translators: %s: weekday
+#: templates/booking-done.php:13
+msgid "Your visit is booked:"
+msgstr ""
+
+#. translators: 1: purpose, 2: email
+#: templates/booking-done.php:14
+#, php-format
+msgid "Purpose: %1$s. A confirmation with a calendar file has been sent to %2$s."
+msgstr ""
+
+#: templates/booking-done.php:22
+msgid "Keep browsing silver"
+msgstr ""
+
+#: templates/booking-form.php:18
+msgid "Booking steps"
+msgstr ""
+
+#: templates/booking-form.php:19
+msgid "Details"
+msgstr ""
+
+#: templates/booking-form.php:25
+msgid "Choose store"
+msgstr ""
+
+#: templates/booking-form.php:27
+msgid "No stores have been set up for booking yet."
+msgstr ""
+
+#: templates/booking-form.php:41
+msgid "Choose day"
+msgstr ""
+
+#: templates/booking-form.php:54
+msgid "No free times right now."
+msgstr ""
+
+#. translators: %s: phone
+#: templates/booking-form.php:54
+#, php-format
+msgid "Call us on %s."
+msgstr ""
+
+#. translators: %s: date
+#: templates/booking-form.php:61
+#, php-format
+msgid "Choose time – %s"
+msgstr ""
+
+#: templates/booking-form.php:73
+msgid "Your details"
+msgstr ""
+
+#: templates/booking-form.php:82
+msgid "What would you like to do?"
+msgstr ""
+
+#. translators: %s: date and time
+#: templates/booking-form.php:94
+#, php-format
+msgid "Confirm booking – %s"
+msgstr ""
+
+#: templates/booking-form.php:102
+msgid "Your booking"
+msgstr ""
+
+#: templates/booking-form.php:107
+msgid "Items you want to see:"
+msgstr ""
+
+#: templates/booking-form.php:116
+msgid "🔒 We reserve the items for you when you book, so nobody else can buy them before your visit."
+msgstr ""
+
+#: templates/booking-form.php:117
+msgid "We will have the items ready for your visit."
+msgstr ""
+
+#: templates/booking-form.php:120
+msgid "You receive a confirmation with a calendar file and a reminder the day before. Remember valid photo ID when buying or selling."
+msgstr ""
+
+#: templates/landing.php:35
+msgid "Physical silver at today’s price"
+msgstr ""
+
+#: templates/landing.php:36
+msgid "Silver you can"
+msgstr ""
+
+#: templates/landing.php:36
+msgid "feel in your hand"
+msgstr ""
+
+#: templates/landing.php:37
+msgid "Bars, coins and Danish silverware – traded at the daily price. Buy online with insured delivery, or book a visit and see the silver before you decide."
+msgstr ""
+
+#: templates/landing.php:39
+msgid "Shop all silver"
+msgstr ""
+
+#: templates/landing.php:43
+msgid "silver items"
+msgstr ""
+
+#: templates/landing.php:44
+msgid "stores"
+msgstr ""
+
+#: templates/landing.php:45
+msgid "live prices"
+msgstr ""
+
+#: templates/landing.php:57
+msgid "since yesterday"
+msgstr ""
+
+#: templates/landing.php:68
+msgid "Prices from the live silver spot price"
+msgstr ""
+
+#: templates/landing.php:69
+msgid "Insured delivery"
+msgstr ""
+
+#: templates/landing.php:70
+msgid "LBMA-approved bars"
+msgstr ""
+
+#: templates/landing.php:71
+msgid "Free valuation in store"
+msgstr ""
+
+#: templates/landing.php:72
+msgid "We reserve items for your visit"
+msgstr ""
+
+#: templates/landing.php:73
+msgid "Personal advice"
+msgstr ""
+
+#: templates/landing.php:79
+msgid "Find your silver"
+msgstr ""
+
+#: templates/landing.php:79
+msgid "See the full range"
+msgstr ""
+
+#. translators: %d: number of items
+#: templates/landing.php:86
+#, php-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/landing.php:99
+msgid "Popular right now"
+msgstr ""
+
+#: templates/landing.php:110
+msgid "Choose online"
+msgstr ""
+
+#: templates/landing.php:110
+msgid "Filter by weight, purity and type – prices follow the silver price automatically."
+msgstr ""
+
+#: templates/landing.php:111
+msgid "Buy or book"
+msgstr ""
+
+#: templates/landing.php:111
+msgid "Pay and get insured delivery – or book a visit and we reserve the item for you."
+msgstr ""
+
+#: templates/landing.php:112
+msgid "Collect or receive"
+msgstr ""
+
+#: templates/landing.php:112
+msgid "Pick up in one of our stores, or have it delivered discreetly to your door."
+msgstr ""
+
+#: templates/landing.php:117
+msgid "Visit us"
+msgstr ""
+
+#. translators: 1: opens, 2: closes
+#: templates/landing.php:126
+#, php-format
+msgid "Open today %1$s–%2$s"
+msgstr ""
+
+#: templates/landing.php:127
+msgid "Closed today"
+msgstr ""
+
+#: templates/landing.php:135
+msgid "Closed"
+msgstr ""
+
+#: templates/landing.php:139
+msgid "Book here"
+msgstr ""
+
+#: templates/price-alert.php:12
+msgid "Waiting for a better price? We email you as soon as silver reaches your price."
+msgstr ""
+
+#: templates/price-alert.php:18
+msgid "Alert me at (kr/g)"
+msgstr ""
+
+#. translators: %s: price per gram
+#: templates/price-alert.php:24
+#, php-format
+msgid "Silver is %s kr/g right now."
+msgstr ""
+
+#: templates/price-alert.php:26
+msgid "Yes, you may email me about this price alert. I can unsubscribe at any time."
+msgstr ""
+
+#: templates/price-alert.php:27
+msgid "Create price alert"
+msgstr ""
+
+#: templates/price-chart.php:11
+msgid "Silver price"
+msgstr ""
+
+#. translators: %d: number of days
+#: templates/price-chart.php:14
+#, php-format
+msgid "Last %d days"
+msgstr ""
+
+#: templates/price-chart.php:16
+#: assets/js/blocks.js:27
+msgid "Period"
+msgstr ""
+
+#: templates/price-chart.php:18
+msgid "1 year"
+msgstr ""
+
+#: templates/sell-calculator.php:11
+msgid "What is your silver worth?"
+msgstr ""
+
+#: templates/sell-calculator.php:12
+msgid "Enter weight and purity – see an instant offer based on today’s price."
+msgstr ""
+
+#: templates/sell-calculator.php:25
+msgid "Our offer"
+msgstr ""
+
+#. translators: %s: grams of fine silver
+#: templates/sell-calculator.php:27
+msgid "Final price after valuation in store."
+msgstr ""
+
+#: templates/sell-calculator.php:29
+msgid "Calculate"
+msgstr ""
+
+#: templates/sell-calculator.php:30
+msgid "Book a free valuation"
+msgstr ""
+
+#: assets/js/blocks.js:40
+msgid "Unit"
+msgstr ""

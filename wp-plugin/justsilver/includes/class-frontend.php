@@ -1,7 +1,7 @@
 <?php
 /**
- * Visning i shoppen: sølv-design, varesidens booking-knap, tegnede sølvbilleder,
- * shortcodes [justsilver_forside] og [justsilver_pris].
+ * Shop display: silver design, booking button on product pages, drawn silver images,
+ * shortcodes [justsilver_forside] and [justsilver_pris].
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -16,13 +16,32 @@ class NS_Frontend {
 		add_action( 'woocommerce_single_product_summary', array( __CLASS__, 'product_summary' ), 25 );
 		add_action( 'woocommerce_single_product_summary', array( __CLASS__, 'book_button' ), 35 );
 		add_action( 'woocommerce_after_shop_loop_item', array( __CLASS__, 'loop_book_button' ), 15 );
+		add_action( 'woocommerce_before_shop_loop_item_title', array( __CLASS__, 'loop_badges' ), 5 );
 		add_filter( 'woocommerce_product_get_image', array( __CLASS__, 'placeholder' ), 10, 5 );
 		add_filter( 'woocommerce_single_product_image_thumbnail_html', array( __CLASS__, 'single_placeholder' ), 10, 2 );
 		add_filter( 'woocommerce_display_product_attributes', array( __CLASS__, 'attributes' ), 10, 2 );
 	}
 
 	public static function enqueue(): void {
-		wp_enqueue_style( 'justsilver', NS_URL . 'assets/css/justsilver.css', array(), NS_VERSION );
+		wp_enqueue_style( 'justsilver', NS_URL . 'assets/css/justsilver.css', array(), NS_VERSION . '.' . filemtime( NS_DIR . 'assets/css/justsilver.css' ) );
+		wp_enqueue_script( 'justsilver', NS_URL . 'assets/js/justsilver.js', array(), NS_VERSION . '.' . filemtime( NS_DIR . 'assets/js/justsilver.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		wp_localize_script( 'justsilver', 'JustSilver', array(
+			'spotPerKg' => NS_Silver_Price::per_kg(),
+			'margin'    => NS_Sell_Calculator::margin(),
+			'animate'   => 'yes' === ns_opt( 'animations', 'yes' ),
+			'i18n'      => array(
+				'days'    => __( 'days', 'justsilver' ),
+				'perGram' => __( 'kr/g', 'justsilver' ),
+				'fine'    => __( 'fine silver', 'justsilver' ),
+			),
+		) );
+	}
+
+	/** WooCommerce notices – only where a WC session exists (not in the block editor's REST preview). */
+	public static function print_notices(): void {
+		if ( function_exists( 'wc_print_notices' ) && function_exists( 'WC' ) && WC()->session ) {
+			wc_print_notices();
+		}
 	}
 
 	public static function is_silver_context(): bool {
@@ -39,7 +58,13 @@ class NS_Frontend {
 
 	public static function maybe_enqueue(): void {
 		global $post;
-		$has_code = $post instanceof WP_Post && ( has_shortcode( $post->post_content, 'justsilver_forside' ) || has_shortcode( $post->post_content, 'justsilver_booking' ) || has_shortcode( $post->post_content, 'justsilver_pris' ) );
+		$codes    = array( 'justsilver_forside', 'justsilver_booking', 'justsilver_pris', 'justsilver_prisgraf', 'justsilver_prisalarm', 'justsilver_saelg' );
+		$has_code = false;
+		if ( $post instanceof WP_Post ) {
+			foreach ( $codes as $c ) {
+				$has_code = $has_code || has_shortcode( $post->post_content, $c ) || has_block( 'justsilver/' . str_replace( 'justsilver_', '', $c ), $post );
+			}
+		}
 		if ( $has_code || self::is_silver_context() || ( function_exists( 'is_shop' ) && ( is_shop() || is_product_taxonomy() ) ) ) {
 			self::enqueue();
 		}
@@ -48,6 +73,9 @@ class NS_Frontend {
 	public static function body_class( array $classes ): array {
 		if ( 'yes' === ns_opt( 'silver_design', 'yes' ) && self::is_silver_context() ) {
 			$classes[] = 'ns-silver';
+		}
+		if ( 'yes' === ns_opt( 'animations', 'yes' ) ) {
+			$classes[] = 'ns-anim';
 		}
 		return $classes;
 	}
@@ -62,7 +90,7 @@ class NS_Frontend {
 		return ( $url && ! is_wp_error( $url ) ) ? $url : wc_get_page_permalink( 'shop' );
 	}
 
-	/* -------------------------------------------------------- Vareside */
+	/* ------------------------------------------------------- Product page */
 
 	public static function product_summary(): void {
 		global $product;
@@ -72,10 +100,20 @@ class NS_Frontend {
 		$w = (float) $product->get_meta( '_ns_weight' );
 		$p = (float) ( $product->get_meta( '_ns_purity' ) ?: 0.999 );
 		echo '<div class="ns ns-facts">';
-		echo '<span>' . esc_html( ns_grams( $w ) ) . '</span><span>Finhed ' . esc_html( ns_purity_label( $p ) ) . '</span><span>' . esc_html( ns_grams( round( $w * $p, 2 ) ) ) . ' rent sølv</span>';
+		echo '<span>' . esc_html( ns_grams( $w ) ) . '</span>';
+		/* translators: %s: purity, e.g. 999 */
+		echo '<span>' . esc_html( sprintf( __( 'Purity %s', 'justsilver' ), ns_purity_label( $p ) ) ) . '</span>';
+		/* translators: %s: weight of fine silver */
+		echo '<span>' . esc_html( sprintf( __( '%s fine silver', 'justsilver' ), ns_grams( round( $w * $p, 2 ) ) ) ) . '</span>';
 		echo '</div>';
 		if ( 'fast' !== $product->get_meta( '_ns_pricing' ) ) {
-			echo '<p class="ns-muted ns-small">Prisen følger sølvets dagspris' . ( NS_Silver_Price::updated_at() ? ' (opdateret ' . esc_html( wp_date( 'j. M H:i', NS_Silver_Price::updated_at() ) ) . ')' : '' ) . '.</p>';
+			$updated = NS_Silver_Price::updated_at();
+			echo '<p class="ns ns-live"><span class="ns-ticker__dot"></span>'
+				. ( $updated
+					/* translators: %s: date and time */
+					? esc_html( sprintf( __( 'Price follows the silver spot price (updated %s).', 'justsilver' ), wp_date( 'j. M H:i', $updated ) ) )
+					: esc_html__( 'Price follows the silver spot price.', 'justsilver' ) )
+				. '</p>';
 		}
 	}
 
@@ -84,8 +122,10 @@ class NS_Frontend {
 		if ( ! ns_is_silver( $product ) || 'no' === $product->get_meta( '_ns_view_in_store' ) || ! ns_opt( 'booking_page' ) ) {
 			return;
 		}
-		$url = NS_Bookings::url( array( 'ns_vare' => $product->get_id() ) );
-		echo '<p class="ns"><a class="ns-btn ns-btn--ghost" href="' . esc_url( $url ) . '">Book tid og se den i butikken</a></p>';
+		$label = NS_Reservations::enabled() && $product->managing_stock() && $product->get_stock_quantity() > 0
+			? __( 'Book a visit – we’ll reserve it for you', 'justsilver' )
+			: __( 'Book a visit and see it in store', 'justsilver' );
+		echo '<p class="ns"><a class="ns-btn ns-btn--ghost ns-btn--shine" href="' . esc_url( NS_Bookings::url( array( 'ns_vare' => $product->get_id() ) ) ) . '">' . esc_html( $label ) . '</a></p>';
 	}
 
 	public static function loop_book_button(): void {
@@ -93,22 +133,39 @@ class NS_Frontend {
 		if ( ! ns_is_silver( $product ) || $product->is_in_stock() || ! ns_opt( 'booking_page' ) ) {
 			return;
 		}
-		echo '<a class="button ns-loop-book" href="' . esc_url( NS_Bookings::url( array( 'ns_vare' => $product->get_id() ) ) ) . '">Book tid</a>';
+		echo '<a class="button ns-loop-book" href="' . esc_url( NS_Bookings::url( array( 'ns_vare' => $product->get_id() ) ) ) . '">' . esc_html__( 'Book a visit', 'justsilver' ) . '</a>';
+	}
+
+	public static function loop_badges(): void {
+		global $product;
+		if ( ! ns_is_silver( $product ) ) {
+			return;
+		}
+		$badges = array();
+		if ( $product->is_featured() ) {
+			$badges[] = '<span class="ns-badge ns-badge--hot">' . esc_html__( 'Popular', 'justsilver' ) . '</span>';
+		}
+		if ( $product->managing_stock() && $product->get_stock_quantity() > 0 && $product->get_stock_quantity() <= 3 ) {
+			/* translators: %d: items left */
+			$badges[] = '<span class="ns-badge ns-badge--low">' . esc_html( sprintf( __( 'Only %d left', 'justsilver' ), $product->get_stock_quantity() ) ) . '</span>';
+		}
+		if ( $badges ) {
+			echo '<span class="ns ns-badges">' . implode( '', $badges ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		}
 	}
 
 	public static function attributes( array $attrs, WC_Product $product ): array {
 		if ( ns_is_silver( $product ) ) {
 			if ( $c = $product->get_meta( '_ns_condition' ) ) {
-				$attrs['ns_condition'] = array( 'label' => 'Stand', 'value' => esc_html( ns_conditions()[ $c ] ?? $c ) );
+				$attrs['ns_condition'] = array( 'label' => __( 'Condition', 'justsilver' ), 'value' => esc_html( ns_conditions()[ $c ] ?? $c ) );
 			}
 			if ( $y = $product->get_meta( '_ns_year' ) ) {
-				$attrs['ns_year'] = array( 'label' => 'Årgang', 'value' => esc_html( $y ) );
+				$attrs['ns_year'] = array( 'label' => __( 'Year', 'justsilver' ), 'value' => esc_html( $y ) );
 			}
 		}
 		return $attrs;
 	}
 
-	/** Tegnet sølvbillede når varen ikke har et foto. */
 	public static function placeholder( $html, $product, $size = 'woocommerce_thumbnail', $attr = array(), $placeholder = true ) {
 		if ( ! $product instanceof WC_Product || $product->get_image_id() || ! ns_is_silver( $product ) ) {
 			return $html;
@@ -116,7 +173,6 @@ class NS_Frontend {
 		return '<span class="ns-art">' . self::svg( $product ) . '</span>';
 	}
 
-	/** Samme tegning i varesidens billedgalleri. */
 	public static function single_placeholder( $html, $attachment_id ) {
 		global $product;
 		if ( $attachment_id || ! $product instanceof WC_Product || $product->get_image_id() || ! ns_is_silver( $product ) ) {
@@ -163,19 +219,27 @@ class NS_Frontend {
 				$shape = "<path d='M70 30h60c0 34-14 50-30 54-16-4-30-20-30-54z' fill='{$g}' {$stroke}/><rect x='96' y='84' width='8' height='26' fill='{$g}' {$stroke}/><ellipse cx='100' cy='118' rx='28' ry='8' fill='{$g}' {$stroke}/>";
 		}
 		return "<svg viewBox='0 0 200 150' role='img' aria-label='" . esc_attr( $p->get_name() ) . "'><defs><linearGradient id='{$id}' x1='0' y1='0' x2='1' y2='1'>"
-			. "<stop offset='0' stop-color='#fbfcfd'/><stop offset='.35' stop-color='#c4cad3'/><stop offset='.6' stop-color='#eef1f4'/><stop offset='1' stop-color='#8f98a5'/></linearGradient></defs>{$shape}</svg>";
+			. "<stop offset='0' stop-color='#fbfcfd'/><stop offset='.35' stop-color='#c4cad3'/><stop offset='.6' stop-color='#eef1f4'/><stop offset='1' stop-color='#8f98a5'/></linearGradient></defs>"
+			. "<g class='ns-art__obj'>{$shape}</g><rect class='ns-art__glint' x='-60' y='0' width='40' height='150' fill='#fff' opacity='0' transform='skewX(-20)'/></svg>";
 	}
 
 	/* ------------------------------------------------------- Shortcodes */
 
 	public static function price_shortcode( $atts ): string {
+		self::enqueue();
 		$atts = shortcode_atts( array( 'enhed' => 'g' ), $atts );
 		$kg   = NS_Silver_Price::per_kg();
 		if ( ! $kg ) {
 			return '';
 		}
-		$text = 'kg' === $atts['enhed'] ? ns_dkk( $kg ) . ' pr. kg' : number_format( $kg / 1000, 2, ',', '.' ) . ' kr/g';
-		return '<span class="ns-ticker"><span class="ns-ticker__dot"></span>Sølv ' . esc_html( $text ) . '</span>';
+		$text   = 'kg' === $atts['enhed'] ? ns_dkk( $kg ) . ' / kg' : number_format( $kg / 1000, 2, ',', '.' ) . ' kr/g';
+		$change = NS_Silver_Price::change();
+		$delta  = '';
+		if ( $change ) {
+			$dir   = $change['pct'] >= 0 ? 'up' : 'down';
+			$delta = '<span class="ns-delta ns-delta--' . $dir . '">' . ( 'up' === $dir ? '▲' : '▼' ) . ' ' . esc_html( number_format( abs( $change['pct'] ), 2, ',', '.' ) ) . '%</span>';
+		}
+		return '<span class="ns ns-ticker"><span class="ns-ticker__dot"></span>' . esc_html__( 'Silver', 'justsilver' ) . ' <strong>' . esc_html( $text ) . '</strong>' . $delta . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	public static function landing(): string {

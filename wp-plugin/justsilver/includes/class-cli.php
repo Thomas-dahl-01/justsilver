@@ -61,17 +61,19 @@ class NS_CLI {
 	 */
 	public function seed( $args, $assoc ) {
 		mt_srand( 42 );
-		if ( ! NS_Silver_Price::per_kg() ) {
-			update_option( 'ns_silver_price', 10500 );
-			update_option( 'ns_silver_price_updated', time() );
+		if ( count( NS_Silver_Price::history() ) < 30 ) {
+			$this->seed_history();
 		}
 		$root = (int) ns_opt( 'silver_category' );
 		if ( ! $root ) {
 			WP_CLI::error( 'Aktivér pluginet først (sølvkategorien mangler).' );
 		}
-		$cat = function ( $name ) use ( $root ) {
-			$t = term_exists( $name, 'product_cat', $root );
-			return $t ? (int) $t['term_id'] : $root;
+		// Child categories are found by their position (order meta), so this works in any language.
+		$children = get_terms( array( 'taxonomy' => 'product_cat', 'parent' => $root, 'hide_empty' => false, 'orderby' => 'meta_value_num', 'meta_key' => 'order' ) );
+		$index    = array( 'Sølvbarrer' => 0, 'Sølvmønter' => 1, 'Granulat & bulk' => 2, 'Smykker' => 3, 'Sølvtøj & bestik' => 4, 'Antik & samlerobjekter' => 5 );
+		$cat      = function ( $name ) use ( $root, $children, $index ) {
+			$i = $index[ $name ] ?? -1;
+			return ( ! is_wp_error( $children ) && isset( $children[ $i ] ) ) ? (int) $children[ $i ]->term_id : $root;
 		};
 		$items = array();
 		$add   = function ( $name, $category, $kind, $weight, $purity = '0.999', $mint = '', $premium = 12, $extra = array() ) use ( &$items, $cat ) {
@@ -169,6 +171,38 @@ class NS_CLI {
 			$this->demo_stores();
 		}
 		WP_CLI::success( "Oprettet {$created} sølvvarer." );
+	}
+
+	/**
+	 * Generate a year of realistic-looking demo price history (random walk with drift), ending at today's price.
+	 *
+	 * [--end=<kr_per_kg>]
+	 * : Price to end at. Default 10500.
+	 */
+	public function history( $args = array(), $assoc = array() ) {
+		$this->seed_history( (float) ( $assoc['end'] ?? 10500 ) );
+		WP_CLI::success( 'Oprettet 365 dages demo-prishistorik.' );
+	}
+
+	private function seed_history( float $end = 10500 ): void {
+		mt_srand( 7 );
+		$points = array();
+		$price  = $end;
+		for ( $d = 0; $d <= 365; $d++ ) {
+			$points[] = round( $price, 2 );
+			$shock    = ( mt_rand( -1000, 1000 ) / 1000 ) * 0.012;     // daily move up to ±1.2 %
+			$wave     = sin( $d / 38 ) * 0.0012;                         // slow swings
+			$price    = $price / ( 1 + 0.0005 + $shock + $wave );        // walk backwards with a slight upward drift
+		}
+		$points  = array_reverse( $points );
+		$history = array();
+		$start   = strtotime( 'today 17:00' ) - 365 * DAY_IN_SECONDS;
+		foreach ( $points as $i => $p ) {
+			$history[] = array( 't' => $start + $i * DAY_IN_SECONDS, 'p' => $p, 's' => 'demo' );
+		}
+		update_option( 'ns_price_history', $history, false );
+		update_option( 'ns_silver_price', $end );
+		update_option( 'ns_silver_price_updated', time() );
 	}
 
 	private function demo_stores(): void {

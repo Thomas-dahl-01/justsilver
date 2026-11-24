@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 db.sqlite3
 wp-plugin/justsilver.zip
+wp-plugin/vendor/
+.phpunit.result.cache
+wp-plugin/.phpunit.cache/

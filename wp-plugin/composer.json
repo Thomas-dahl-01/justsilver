@@ -1,0 +1,16 @@
+{
+    "name": "thomas-dahl-01/justsilver",
+    "description": "JustSilver – silver shop plugin for WordPress/WooCommerce",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "find justsilver -name '*.php' -print0 | xargs -0 -n1 php -l"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

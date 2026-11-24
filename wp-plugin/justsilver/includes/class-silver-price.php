@@ -1,10 +1,9 @@
 <?php
 /**
- * Sølvets dagspris og genberegning af alle spot-baserede sølvvarer.
+ * The daily silver spot price, its history, and repricing of all spot-priced products.
  *
- * Prisen gemmes i optionen "ns_silver_price" (DKK pr. kg rent sølv) med historik i "ns_price_history".
- * Genberegning sker i baggrunden i bidder via WooCommerce' Action Scheduler, så det også virker
- * med mange tusinde varer uden at siden går i stå.
+ * Price: option "ns_silver_price" (DKK per kg fine silver). History: "ns_price_history".
+ * Repricing runs in the background in batches via WooCommerce' Action Scheduler.
  */
 defined( 'ABSPATH' ) || exit;
 
@@ -16,7 +15,6 @@ class NS_Silver_Price {
 		add_action( 'ns_reprice_batch', array( __CLASS__, 'reprice_batch' ), 10, 1 );
 	}
 
-	/** DKK pr. kg rent sølv (0 hvis ikke sat). */
 	public static function per_kg(): float {
 		return (float) get_option( 'ns_silver_price', 0 );
 	}
@@ -29,12 +27,37 @@ class NS_Silver_Price {
 		return (int) get_option( 'ns_silver_price_updated', 0 );
 	}
 
+	/** @return array<int,array{t:int,p:float,s:string}> */
+	public static function history(): array {
+		return array_values( (array) get_option( 'ns_price_history', array() ) );
+	}
+
 	/**
-	 * Sæt ny dagspris. Starter genberegning af alle spot-varer hvis prisen har ændret sig.
+	 * Change since roughly 24 hours ago (or the oldest point if newer).
 	 *
-	 * @param string $source "manuel", "api" el.lign. – vises i historikken.
+	 * @return array{abs:float,pct:float}|null
 	 */
-	public static function set( float $per_kg, string $source = 'manuel' ): bool {
+	public static function change( int $seconds = DAY_IN_SECONDS ): ?array {
+		$history = self::history();
+		$now     = self::per_kg();
+		if ( count( $history ) < 2 || $now <= 0 ) {
+			return null;
+		}
+		$target = time() - $seconds;
+		$ref    = $history[0]['p'];
+		foreach ( $history as $h ) {
+			if ( $h['t'] <= $target ) {
+				$ref = $h['p'];
+			}
+		}
+		if ( $ref <= 0 ) {
+			return null;
+		}
+		return array( 'abs' => $now - $ref, 'pct' => ( $now - $ref ) / $ref * 100 );
+	}
+
+	/** Set a new spot price and reprice all spot products if it changed. */
+	public static function set( float $per_kg, string $source = 'manual' ): bool {
 		if ( $per_kg <= 0 ) {
 			return false;
 		}
@@ -42,9 +65,9 @@ class NS_Silver_Price {
 		update_option( 'ns_silver_price', round( $per_kg, 2 ) );
 		update_option( 'ns_silver_price_updated', time() );
 
-		$history   = (array) get_option( 'ns_price_history', array() );
+		$history   = self::history();
 		$history[] = array( 't' => time(), 'p' => round( $per_kg, 2 ), 's' => $source );
-		update_option( 'ns_price_history', array_slice( $history, -200 ), false );
+		update_option( 'ns_price_history', array_slice( $history, -1000 ), false );
 
 		if ( abs( $per_kg - $old ) >= 0.01 ) {
 			self::schedule_reprice();
@@ -53,25 +76,21 @@ class NS_Silver_Price {
 		return true;
 	}
 
-	/** Beregn salgsprisen for et produkt ud fra dagsprisen. */
+	/** Selling price for a product at the current (or given) spot price. */
 	public static function compute( WC_Product $product, ?float $per_kg = null ): ?float {
-		$per_kg  = $per_kg ?? self::per_kg();
-		$weight  = (float) $product->get_meta( '_ns_weight' );
-		$purity  = (float) ( $product->get_meta( '_ns_purity' ) ?: 0.999 );
 		$premium = $product->get_meta( '_ns_premium' );
 		$premium = '' === $premium ? (float) ns_opt( 'default_premium', 12 ) : (float) $premium;
-		if ( $per_kg <= 0 || $weight <= 0 ) {
-			return null;
-		}
-		$metal = $weight * $purity * ( $per_kg / 1000 );
-		$price = $metal * ( 1 + $premium / 100 );
-		$price = (float) apply_filters( 'justsilver_computed_price', round( $price ), $product, $per_kg );
-		return max( 1, $price );
+		$price   = ns_calc_price(
+			(float) $product->get_meta( '_ns_weight' ),
+			(float) ( $product->get_meta( '_ns_purity' ) ?: 0.999 ),
+			$per_kg ?? self::per_kg(),
+			$premium
+		);
+		return null === $price ? null : (float) apply_filters( 'justsilver_computed_price', $price, $product, $per_kg ?? self::per_kg() );
 	}
 
 	public static function schedule_reprice(): void {
 		if ( ! function_exists( 'as_enqueue_async_action' ) ) {
-			// Fallback uden Action Scheduler: kør alt med det samme.
 			$page = 1;
 			while ( self::reprice_batch( $page ) ) {
 				$page++;
@@ -82,18 +101,14 @@ class NS_Silver_Price {
 		as_enqueue_async_action( 'ns_reprice_batch', array( 1 ), 'justsilver' );
 	}
 
-	/**
-	 * Genberegn én side spot-varer og planlæg næste side.
-	 *
-	 * @return bool true hvis der er flere sider.
-	 */
+	/** Reprice one page of spot products; queue the next. Returns true if there are more. */
 	public static function reprice_batch( $page = 1 ): bool {
 		$page = max( 1, (int) $page );
 		$ids  = self::spot_product_ids( $page );
 		foreach ( $ids as $id ) {
 			$product = wc_get_product( $id );
 			if ( $product ) {
-				$product->save(); // pris sættes i NS_Product_Fields::before_save
+				$product->save(); // price is set in NS_Product_Fields::before_save
 			}
 		}
 		$more = count( $ids ) === self::BATCH;

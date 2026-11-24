@@ -1,22 +1,22 @@
 <?php
 /**
- * Automatisk hentning af sølvkursen (XAG/DKK) via WP-Cron.
+ * Automatic silver spot price (XAG/DKK) via WP-Cron.
  *
- * Indbygget udbyder: metalpriceapi.com (kræver gratis/betalt API-nøgle).
- * Andre udbydere kan kobles på med filteret "justsilver_fetch_spot_price"
- * som skal returnere DKK pr. troy ounce (float) eller null.
+ * Built-in provider: metalpriceapi.com (needs an API key).
+ * Other providers: filter "justsilver_fetch_spot_price" returning DKK per troy ounce (float) or null.
  */
 defined( 'ABSPATH' ) || exit;
 
 class NS_Price_API {
 
-	const HOOK       = 'ns_fetch_silver_price';
-	const OZ_PER_KG  = 32.1507466;
-	const MAX_JUMP   = 0.20; // afvis kurser der ændrer sig mere end 20 % på én gang (formentlig fejl)
+	const HOOK      = 'ns_fetch_silver_price';
+	const OZ_PER_KG = 32.1507466;
+	const MAX_JUMP  = 0.20; // reject prices that move more than 20 % at once (probably bad data)
 
 	public static function init(): void {
 		add_action( self::HOOK, array( __CLASS__, 'run' ) );
 		add_action( 'update_option_ns_settings', array( __CLASS__, 'reschedule' ) );
+		add_action( 'add_option_ns_settings', array( __CLASS__, 'reschedule' ) );
 	}
 
 	public static function reschedule(): void {
@@ -27,11 +27,7 @@ class NS_Price_API {
 		}
 	}
 
-	/**
-	 * Hent og gem kursen.
-	 *
-	 * @return array{ok:bool,message:string,price?:float}
-	 */
+	/** @return array{ok:bool,message:string,price?:float} */
 	public static function run( bool $force = false ): array {
 		$per_oz = apply_filters( 'justsilver_fetch_spot_price', null );
 		if ( null === $per_oz ) {
@@ -42,21 +38,23 @@ class NS_Price_API {
 		}
 		$per_kg = (float) $per_oz * self::OZ_PER_KG;
 		if ( $per_kg <= 0 ) {
-			return self::log( false, 'Ugyldig kurs modtaget.' );
+			return self::log( false, __( 'Invalid price received.', 'justsilver' ) );
 		}
 		$old = NS_Silver_Price::per_kg();
 		if ( ! $force && $old > 0 && abs( $per_kg - $old ) / $old > self::MAX_JUMP ) {
-			return self::log( false, sprintf( 'Kursen %s kr/kg afveg mere end 20 %% fra %s kr/kg og blev ikke brugt. Kontrollér og sæt den manuelt.', number_format( $per_kg, 0, ',', '.' ), number_format( $old, 0, ',', '.' ) ) );
+			/* translators: 1: new price per kg, 2: current price per kg */
+			return self::log( false, sprintf( __( 'The price %1$s/kg differed more than 20%% from %2$s/kg and was not used. Check it and set it manually.', 'justsilver' ), ns_dkk( $per_kg ), ns_dkk( $old ) ) );
 		}
 		NS_Silver_Price::set( $per_kg, 'api' );
-		return self::log( true, 'Sølvkurs opdateret: ' . ns_dkk( $per_kg ) . ' pr. kg', $per_kg );
+		/* translators: %s: price per kg */
+		return self::log( true, sprintf( __( 'Silver price updated: %s per kg', 'justsilver' ), ns_dkk( $per_kg ) ), $per_kg );
 	}
 
-	/** @return float|WP_Error DKK pr. troy ounce */
+	/** @return float|WP_Error DKK per troy ounce */
 	public static function fetch_metalpriceapi() {
 		$key = ns_opt( 'api_key' );
 		if ( ! $key ) {
-			return new WP_Error( 'ns_no_key', 'Der er ingen API-nøgle sat op.' );
+			return new WP_Error( 'ns_no_key', __( 'No API key has been set up.', 'justsilver' ) );
 		}
 		$url = add_query_arg( array( 'api_key' => $key, 'base' => 'DKK', 'currencies' => 'XAG' ), 'https://api.metalpriceapi.com/v1/latest' );
 		$res = wp_remote_get( $url, array( 'timeout' => 15 ) );
@@ -66,16 +64,21 @@ class NS_Price_API {
 		$body = json_decode( wp_remote_retrieve_body( $res ), true );
 		if ( 200 !== wp_remote_retrieve_response_code( $res ) || empty( $body['success'] ) ) {
 			$msg = $body['error']['info'] ?? $body['error']['message'] ?? ( 'HTTP ' . wp_remote_retrieve_response_code( $res ) );
-			return new WP_Error( 'ns_api', 'Pris-API fejlede: ' . $msg );
+			/* translators: %s: error from the price API */
+			return new WP_Error( 'ns_api', sprintf( __( 'Price API failed: %s', 'justsilver' ), $msg ) );
 		}
-		$rates = $body['rates'] ?? array();
+		return self::parse_rates( (array) ( $body['rates'] ?? array() ) );
+	}
+
+	/** @return float|WP_Error DKK per troy ounce from a metalpriceapi "rates" object. */
+	public static function parse_rates( array $rates ) {
 		if ( ! empty( $rates['DKKXAG'] ) ) {
-			return (float) $rates['DKKXAG'];      // DKK for 1 oz sølv
+			return (float) $rates['DKKXAG'];
 		}
 		if ( ! empty( $rates['XAG'] ) ) {
-			return 1 / (float) $rates['XAG'];      // oz sølv for 1 DKK -> invertér
+			return 1 / (float) $rates['XAG'];
 		}
-		return new WP_Error( 'ns_api', 'Pris-API svarede uden XAG-kurs.' );
+		return new WP_Error( 'ns_api', __( 'The price API answered without an XAG rate.', 'justsilver' ) );
 	}
 
 	private static function log( bool $ok, string $message, float $price = 0 ): array {
