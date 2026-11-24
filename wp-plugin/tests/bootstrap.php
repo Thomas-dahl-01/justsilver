@@ -11,9 +11,12 @@ define( 'NS_DIR', dirname( __DIR__ ) . '/justsilver/' );
 $GLOBALS['ns_test_options'] = array();
 $GLOBALS['ns_test_filters'] = array();
 
-function __( $text, $domain = null ) { return $text; }
-function _x( $text, $context, $domain = null ) { return $text; }
-function _n( $single, $plural, $n, $domain = null ) { return 1 === $n ? $single : $plural; }
+$GLOBALS['ns_test_translations'] = 0; // counts translation calls (see BootTest)
+function __( $text, $domain = null ) { $GLOBALS['ns_test_translations']++; return $text; }
+function _x( $text, $context, $domain = null ) { $GLOBALS['ns_test_translations']++; return $text; }
+function _n( $single, $plural, $n, $domain = null ) { $GLOBALS['ns_test_translations']++; return 1 === $n ? $single : $plural; }
+function add_action( $hook, $cb, $prio = 10, $args = 1 ) { return true; }
+function add_shortcode( $tag, $cb ) { return true; }
 function esc_html( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function esc_attr( $t ) { return htmlspecialchars( (string) $t, ENT_QUOTES ); }
 function get_option( $key, $default = false ) { return $GLOBALS['ns_test_options'][ $key ] ?? $default; }

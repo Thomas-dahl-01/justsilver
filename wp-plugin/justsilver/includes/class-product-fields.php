@@ -9,6 +9,9 @@ defined( 'ABSPATH' ) || exit;
 
 class NS_Product_Fields {
 
+	/** CSV column keys. Kept untranslated so they can be used before translations load (WP 6.7+). */
+	const CSV_KEYS = array( 'ns_is_silver', 'ns_kind', 'ns_weight', 'ns_purity', 'ns_mint', 'ns_year', 'ns_condition', 'ns_pricing', 'ns_premium', 'ns_view_in_store' );
+
 	/** Global attributes (slug => label) kept in sync. Slugs stay stable across languages. */
 	public static function attributes(): array {
 		return array(
@@ -32,7 +35,7 @@ class NS_Product_Fields {
 		add_filter( 'woocommerce_csv_product_import_mapping_default_columns', array( __CLASS__, 'csv_default_columns' ) );
 		add_filter( 'woocommerce_product_export_column_names', array( __CLASS__, 'csv_export_columns' ) );
 		add_filter( 'woocommerce_product_export_product_default_columns', array( __CLASS__, 'csv_export_columns' ) );
-		foreach ( array_keys( self::csv_columns() ) as $col ) {
+		foreach ( self::CSV_KEYS as $col ) {
 			add_filter( "woocommerce_product_export_product_column_{$col}", function ( $value, $product ) use ( $col ) {
 				return $product->get_meta( '_' . $col );
 			}, 10, 2 );
@@ -265,7 +268,7 @@ class NS_Product_Fields {
 	/** Pure mapping of one CSV row to meta values (unit tested). */
 	public static function csv_to_meta( array $data ): array {
 		$meta = array();
-		foreach ( array( 'ns_is_silver', 'ns_kind', 'ns_weight', 'ns_purity', 'ns_mint', 'ns_year', 'ns_condition', 'ns_pricing', 'ns_premium', 'ns_view_in_store' ) as $key ) {
+		foreach ( self::CSV_KEYS as $key ) {
 			if ( ! isset( $data[ $key ] ) || '' === trim( (string) $data[ $key ] ) ) {
 				continue;
 			}
