@@ -20,18 +20,18 @@ $stores   = NS_Stores::all();
 $count    = $cat && ! is_wp_error( $cat ) ? (int) ( new WP_Query( array( 'post_type' => 'product', 'post_status' => 'publish', 'fields' => 'ids', 'posts_per_page' => 1, 'tax_query' => array( array( 'taxonomy' => 'product_cat', 'terms' => $cat_id, 'include_children' => true ) ) ) ) )->found_posts : 0;
 // Small line icons in category order: bar, coin, granules, ring, spoon, goblet.
 $icons = array(
-	'<path d="M5 17 8 7h8l3 10z"/>',
-	'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="5"/>',
-	'<circle cx="8" cy="15" r="3"/><circle cx="15" cy="15" r="3"/><circle cx="11.5" cy="9" r="3"/>',
-	'<circle cx="12" cy="14" r="6"/><path d="m10 5 2-2 2 2-2 2z"/>',
-	'<ellipse cx="12" cy="6.5" rx="3" ry="4"/><path d="M12 10.5V21"/>',
-	'<path d="M7 3h10c0 6-2 9-5 10-3-1-5-4-5-10zM12 13v5M8 21h8"/>',
+	'<path pathLength="1" d="M5 17 8 7h8l3 10z"/>',
+	'<circle pathLength="1" cx="12" cy="12" r="8"/><circle pathLength="1" cx="12" cy="12" r="5"/>',
+	'<circle pathLength="1" cx="8" cy="15" r="3"/><circle pathLength="1" cx="15" cy="15" r="3"/><circle pathLength="1" cx="11.5" cy="9" r="3"/>',
+	'<circle pathLength="1" cx="12" cy="14" r="6"/><path pathLength="1" d="m10 5 2-2 2 2-2 2z"/>',
+	'<ellipse pathLength="1" cx="12" cy="6.5" rx="3" ry="4"/><path pathLength="1" d="M12 10.5V21"/>',
+	'<path pathLength="1" d="M7 3h10c0 6-2 9-5 10-3-1-5-4-5-10zM12 13v5M8 21h8"/>',
 );
 ?>
 <div class="ns ns-landing">
 	<section class="ns-hero">
 		<div class="ns-hero__sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-		<div class="ns-hero__text ns-reveal">
+		<div class="ns-hero__text ns-reveal" data-ns-depth="-0.25">
 			<p class="ns-eyebrow"><?php esc_html_e( 'Physical silver at today’s price', 'justsilver' ); ?></p>
 			<h1><?php esc_html_e( 'Silver you can', 'justsilver' ); ?><br><em class="ns-shimmer"><?php esc_html_e( 'feel in your hand', 'justsilver' ); ?></em></h1>
 			<p class="ns-lead"><?php esc_html_e( 'Bars, coins and Danish silverware – traded at the daily price. Buy online with insured delivery, or book a visit and see the silver before you decide.', 'justsilver' ); ?></p>
@@ -46,13 +46,13 @@ $icons = array(
 			</ul>
 		</div>
 		<div class="ns-hero__art" aria-hidden="true">
-			<div class="ns-ingot ns-ingot--1"><span>1 KG · 999</span></div>
-			<div class="ns-ingot ns-ingot--2"><span>500 G · 999</span></div>
-			<div class="ns-coin"><span>1 OZ</span></div>
+			<div class="ns-ingot ns-ingot--1" data-ns-depth="1.2"><span>1 KG · 999</span></div>
+			<div class="ns-ingot ns-ingot--2" data-ns-depth="0.6"><span>500 G · 999</span></div>
+			<div class="ns-coin" data-ns-depth="1.8"><span>1 OZ</span></div>
 			<?php if ( $kg ) : ?>
-			<div class="ns-hero__price">
+			<div class="ns-hero__price" data-ns-depth="-0.5">
 				<span><span class="ns-ticker__dot"></span><?php esc_html_e( 'Today’s silver price', 'justsilver' ); ?></span>
-				<strong><span data-ns-count="<?php echo esc_attr( number_format( $kg / 1000, 2, '.', '' ) ); ?>" data-ns-decimals="2"><?php echo esc_html( number_format( $kg / 1000, 2, ',', '.' ) ); ?></span> kr/g</strong>
+				<strong><span data-ns-live><?php echo esc_html( number_format( $kg / 1000, 2, ',', '.' ) ); ?></span> kr/g</strong>
 				<?php if ( $change ) : $up = $change['pct'] >= 0; ?>
 					<small class="ns-delta ns-delta--<?php echo $up ? 'up' : 'down'; ?>"><?php echo $up ? '▲' : '▼'; ?> <?php echo esc_html( number_format( abs( $change['pct'] ), 2, ',', '.' ) ); ?>% <?php esc_html_e( 'since yesterday', 'justsilver' ); ?></small>
 				<?php else : ?>

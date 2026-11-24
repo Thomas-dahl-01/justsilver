@@ -20,6 +20,26 @@ class NS_Frontend {
 		add_filter( 'woocommerce_product_get_image', array( __CLASS__, 'placeholder' ), 10, 5 );
 		add_filter( 'woocommerce_single_product_image_thumbnail_html', array( __CLASS__, 'single_placeholder' ), 10, 2 );
 		add_filter( 'woocommerce_display_product_attributes', array( __CLASS__, 'attributes' ), 10, 2 );
+		add_action( 'rest_api_init', array( __CLASS__, 'rest' ) );
+	}
+
+	/** GET /wp-json/justsilver/v1/price – public, read-only; used to keep the price on screen live. */
+	public static function rest(): void {
+		register_rest_route( 'justsilver/v1', '/price', array(
+			'methods'             => 'GET',
+			'permission_callback' => '__return_true',
+			'callback'            => function () {
+				$change = NS_Silver_Price::change();
+				$res    = new WP_REST_Response( array(
+					'per_kg'     => NS_Silver_Price::per_kg(),
+					'per_gram'   => round( NS_Silver_Price::per_gram(), 4 ),
+					'change_pct' => $change ? round( $change['pct'], 3 ) : null,
+					'updated'    => NS_Silver_Price::updated_at(),
+				) );
+				$res->header( 'Cache-Control', 'public, max-age=30' );
+				return $res;
+			},
+		) );
 	}
 
 	public static function enqueue(): void {
@@ -28,7 +48,9 @@ class NS_Frontend {
 		wp_localize_script( 'justsilver', 'JustSilver', array(
 			'spotPerKg' => NS_Silver_Price::per_kg(),
 			'margin'    => NS_Sell_Calculator::margin(),
-			'animate'   => 'yes' === ns_opt( 'animations', 'yes' ),
+			'animate'     => 'yes' === ns_opt( 'animations', 'yes' ),
+			'priceUrl'    => rest_url( 'justsilver/v1/price' ),
+			'pollSeconds' => 60,
 			'i18n'      => array(
 				'days'    => __( 'days', 'justsilver' ),
 				'perGram' => __( 'kr/g', 'justsilver' ),
@@ -239,7 +261,8 @@ class NS_Frontend {
 			$dir   = $change['pct'] >= 0 ? 'up' : 'down';
 			$delta = '<span class="ns-delta ns-delta--' . $dir . '">' . ( 'up' === $dir ? '▲' : '▼' ) . ' ' . esc_html( number_format( abs( $change['pct'] ), 2, ',', '.' ) ) . '%</span>';
 		}
-		return '<span class="ns ns-ticker"><span class="ns-ticker__dot"></span>' . esc_html__( 'Silver', 'justsilver' ) . ' <strong>' . esc_html( $text ) . '</strong>' . $delta . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
+		$live = 'kg' === $atts['enhed'] ? '' : ' data-ns-live';
+		return '<span class="ns ns-ticker"><span class="ns-ticker__dot"></span>' . esc_html__( 'Silver', 'justsilver' ) . ' <strong><span' . $live . '>' . esc_html( 'kg' === $atts['enhed'] ? $text : number_format( $kg / 1000, 2, ',', '.' ) ) . '</span>' . ( 'kg' === $atts['enhed'] ? '' : ' kr/g' ) . '</strong>' . $delta . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput
 	}
 
 	public static function landing(): string {

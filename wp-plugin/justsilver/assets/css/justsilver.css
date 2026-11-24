@@ -285,6 +285,76 @@ body.ns-silver .stock.in-stock { color: var(--ns-ok); }
 .ns-js-reveal .ns-reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ns-ease), transform .7s var(--ns-ease); transition-delay: var(--ns-delay, 0ms); }
 .ns-js-reveal .ns-reveal.is-in { opacity: 1; transform: none; }
 
+/* =====================================================================
+   Interactive effects (v1.2) – created by assets/js/justsilver.js.
+   ===================================================================== */
+@property --ns-ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+/* Hero: silver dust, mouse spotlight, parallax layers */
+.ns-dust { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+.ns-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(520px circle at var(--mx, 72%) var(--my, 30%), rgba(255,255,255,.10), transparent 60%); transition: background .2s; }
+[data-ns-depth] { transition: translate .5s cubic-bezier(.2,.8,.2,1); }
+.ns-js-reveal .ns-hero__text.ns-reveal { transition: opacity .7s var(--ns-ease), transform .7s var(--ns-ease), translate .5s cubic-bezier(.2,.8,.2,1); }
+.ns-hero__art { will-change: transform; }
+
+/* Headline: words rise in one by one */
+.ns-split .ns-word { display: inline-block; opacity: 0; transform: translateY(.55em) rotate(2deg); animation: ns-word .9s var(--ns-ease) forwards; animation-delay: calc(var(--i) * 110ms + 200ms); }
+.ns-split .ns-word.ns-shimmer { animation: ns-word .9s var(--ns-ease) forwards, ns-text-shimmer 6s linear infinite; animation-delay: calc(var(--i) * 110ms + 200ms), 0s; }
+@keyframes ns-word { to { opacity: 1; transform: none; } }
+
+/* Section headings: a gradient underline draws in */
+.ns-section__head h2 { position: relative; }
+.ns-section__head h2::after { content: ""; position: absolute; left: 0; bottom: -8px; width: 56px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, var(--ns-aurora-1), var(--ns-aurora-2)); transform: scaleX(0); transform-origin: left; transition: transform .9s .25s var(--ns-ease); }
+.ns-section__head.is-in h2::after { transform: scaleX(1); }
+
+/* Category icons draw themselves */
+.ns-js-reveal .ns-cat__icon svg * { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.ns-js-reveal .ns-cat.is-in .ns-cat__icon svg * { animation: ns-draw-icon 1.3s ease forwards; animation-delay: calc(var(--ns-delay, 0ms) + 250ms); }
+@keyframes ns-draw-icon { to { stroke-dashoffset: 0; } }
+
+/* Cards: 3D tilt + light glare following the mouse */
+.ns-tilt { transform-style: preserve-3d; transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .3s; will-change: transform; }
+.ns-tilt:not(.ns-card)::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.55), transparent 55%); mix-blend-mode: soft-light; }
+.ns-tilt:hover::after { opacity: 1; }
+.ns-store { position: relative; }
+
+/* Sell / alert cards: a slowly rotating aurora border */
+.ns-card::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+  background: conic-gradient(from var(--ns-ang), transparent 0 55%, var(--ns-aurora-1), var(--ns-aurora-2), transparent 92%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; }
+.ns-anim .ns-card::before { animation: ns-border-spin 7s linear infinite; }
+@keyframes ns-border-spin { to { --ns-ang: 360deg; } }
+
+/* Buttons: magnetic pull and click ripple */
+.ns-btn { transition: transform .25s var(--ns-ease), box-shadow .25s var(--ns-ease), background .2s, translate .2s ease-out; }
+.ns-choice, .ns-day, .ns-slot, .ns-chart__ranges button { position: relative; overflow: hidden; }
+.ns-ripple { position: absolute; border-radius: 50%; pointer-events: none; background: rgba(255,255,255,.45); transform: scale(0); animation: ns-ripple .65s ease-out forwards; }
+.ns-choice:not(.is-active) .ns-ripple, .ns-day:not(.is-active) .ns-ripple, .ns-slot:not(.is-active) .ns-ripple, .ns-btn--ghost .ns-ripple, .ns-btn--light .ns-ripple { background: rgba(15,27,45,.15); }
+@keyframes ns-ripple { to { transform: scale(1); opacity: 0; } }
+
+/* Live price: rolling digits + flash on change */
+.ns-odo { display: inline-flex; vertical-align: bottom; border-radius: 6px; }
+.ns-odo__c { display: inline-block; height: 1.15em; line-height: 1.15em; overflow: hidden; }
+.ns-odo__s { display: flex; flex-direction: column; transition: transform 1.2s cubic-bezier(.2,.9,.15,1); }
+.ns-odo__s i { font-style: normal; height: 1.15em; line-height: 1.15em; }
+.ns-flash--up { animation: ns-flash-up 1.6s ease-out; }
+.ns-flash--down { animation: ns-flash-down 1.6s ease-out; }
+@keyframes ns-flash-up { 0% { background: rgba(74,222,128,.45); box-shadow: 0 0 0 6px rgba(74,222,128,.25); } 100% { background: transparent; box-shadow: 0 0 0 0 transparent; } }
+@keyframes ns-flash-down { 0% { background: rgba(248,113,113,.45); box-shadow: 0 0 0 6px rgba(248,113,113,.25); } 100% { background: transparent; box-shadow: 0 0 0 0 transparent; } }
+
+/* Add to cart: flying coin + basket bump (outside .ns, so plain colours) */
+.ns-fly-coin { position: fixed; z-index: 99999; width: 28px; height: 28px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 35% 30%, #fff, #c3c9d2 45%, #7f8894 100%); box-shadow: inset 0 0 0 3px rgba(255,255,255,.4), 0 6px 14px rgba(0,0,0,.3); }
+.ns-bump { animation: ns-bump .55s cubic-bezier(.3,1.6,.5,1); }
+@keyframes ns-bump { 0% { transform: scale(1); } 40% { transform: scale(1.28) rotate(-6deg); } 70% { transform: scale(.94) rotate(3deg); } 100% { transform: scale(1); } }
+
+/* Scroll progress bar on the silver front page */
+.ns-progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 99998; transform: scaleX(0); transform-origin: 0 50%; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: linear-gradient(90deg, #5eead4, #818cf8, #93c5fd); box-shadow: 0 0 10px rgba(129,140,248,.6); }
+body.admin-bar .ns-progress-bar { top: 32px; }
+
 /* ---------- Responsive & reduced motion ---------- */
 @media (max-width: 900px) {
   .ns-hero, .ns-booking { grid-template-columns: 1fr; }

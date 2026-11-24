@@ -30,6 +30,7 @@ priser efter dagens sølvkurs, interaktiv prisgraf, prisalarmer, sælg-dit-sølv
 | **Oversættelig** | Engelsk kildetekst + komplet dansk oversættelse (320 tekster). |
 | **Masseimport** | WooCommerce' CSV-import med sølvkolonner, til tusindvis af varer. |
 | **Liv i designet** | Svævende barrer, nordlys-gradient, glimt, scroll-animationer og tællere – respekterer "reducer bevægelse". |
+| **Interaktive effekter** | Sølvstøv der viger for musen, parallax og spotlight i toppen, kort der vipper i 3D, magnetiske knapper, live-pris med rullende tal, og en sølvmønt der flyver ned i kurven. |
 
 <table>
   <tr>
@@ -56,8 +57,9 @@ priser efter dagens sølvkurs, interaktiv prisgraf, prisalarmer, sælg-dit-sølv
 
 ## Kvalitet
 
-- **30 unit tests** (PHPUnit) af prisberegning, opkøb, ledige tider, kalenderfil, graf og CSV-import
+- **33 unit tests** (PHPUnit) af prisberegning, opkøb, ledige tider, kalenderfil, graf og CSV-import
 - **Integrationstest** mod en rigtig WordPress: reservation, frigivelse, påmindelse, prisalarm og alle blokke
+- **Browsertest** af alle effekter (Playwright), både med og uden "reducer bevægelse"
 - **GitHub Actions** kører lint og tests på PHP 8.1–8.4, tjekker JavaScript og at oversættelsen er komplet
 
 ```sh
