@@ -1,0 +1,139 @@
+/* JustSilver – kølige, månelyse sølvtoner oven på shoppens eget tema.
+   Alt er scopet til .ns (pluginets egne elementer) og body.ns-silver (sølvkategorier/-varer),
+   så resten af shoppen ikke påvirkes. */
+.ns, body.ns-silver {
+  --ns-ink: #0f1b2d;
+  --ns-ink-2: #1c2b42;
+  --ns-soft: #4a5568;
+  --ns-s1: #f6f7f9;
+  --ns-s2: #e7eaee;
+  --ns-s3: #c5cbd3;
+  --ns-s4: #8e97a3;
+  --ns-ice: #8fb3d1;
+  --ns-ice-dark: #3d6a8f;
+  --ns-ok: #2f7d57;
+  --ns-r: 10px;
+  --ns-shadow: 0 1px 2px rgba(15,27,45,.06), 0 8px 24px rgba(15,27,45,.06);
+  --ns-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+}
+.ns { color: var(--ns-ink); }
+.ns *, .ns *::before, .ns *::after { box-sizing: border-box; }
+.ns h1, .ns h2, .ns h3 { font-family: var(--ns-serif); font-weight: 600; line-height: 1.15; letter-spacing: -.01em; margin: 0 0 .5em; }
+.ns-muted { color: var(--ns-soft); }
+.ns-small { font-size: .875rem; }
+.ns-hp { position: absolute !important; left: -9999px !important; }
+
+/* Knapper */
+.ns-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 22px; border-radius: 999px; border: 1px solid var(--ns-ink); background: var(--ns-ink); color: #fff !important; font-weight: 600; text-decoration: none !important; cursor: pointer; transition: transform .15s, background .15s; line-height: 1.2; text-align: center; }
+.ns-btn:hover { background: var(--ns-ink-2); transform: translateY(-1px); }
+.ns-btn--sm { padding: 7px 14px; font-size: .85rem; }
+.ns-btn--ghost { background: transparent; color: var(--ns-ink) !important; }
+.ns-btn--ghost:hover { background: var(--ns-s2); }
+.ns-btn--light { background: linear-gradient(180deg, #fff, #cfd5dd); color: var(--ns-ink) !important; border-color: transparent; }
+.ns-btn--outline { background: transparent; border-color: rgba(255,255,255,.5); }
+.ns-btn--block { width: 100%; }
+
+/* Pris-ticker [justsilver_pris] */
+.ns-ticker { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.ns-ticker__dot { width: 8px; height: 8px; border-radius: 50%; background: #5fd49a; box-shadow: 0 0 0 3px rgba(95,212,154,.2); }
+
+/* Sølv-forside */
+.ns-landing { display: grid; gap: 48px; }
+.ns-hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 40px; align-items: center; padding: 56px 48px; border-radius: 16px; color: #fff; overflow: hidden;
+  background: radial-gradient(1000px 420px at 85% 15%, #2a3d5a 0%, transparent 60%), linear-gradient(160deg, var(--ns-ink) 0%, #16263d 100%); }
+.ns-hero h1 { font-size: clamp(2.1rem, 4.6vw, 3.6rem); color: #fff; }
+.ns-hero h1 em { font-style: italic; background: linear-gradient(90deg, #fff, #b8c2cf 50%, #fff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.ns-eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: .75rem; font-weight: 600; color: var(--ns-ice); margin: 0 0 12px; }
+.ns-lead { font-size: 1.1rem; color: #c9d3df; max-width: 34em; }
+.ns-hero__cta { display: flex; gap: 12px; flex-wrap: wrap; margin: 26px 0; }
+.ns-usp { list-style: none; padding: 0; margin: 0; display: flex; gap: 20px; flex-wrap: wrap; font-size: .9rem; color: #c9d3df; }
+.ns-usp li::before { content: "✓ "; color: var(--ns-ice); font-weight: 700; }
+.ns-hero__art { position: relative; height: 320px; }
+.ns-ingot { position: absolute; width: 220px; height: 86px; background: linear-gradient(135deg, #fdfdfe 0%, #b9c0ca 40%, #eef1f4 60%, #848d99 100%); clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%); }
+.ns-ingot--1 { left: 6%; top: 44%; transform: rotate(-6deg); }
+.ns-ingot--2 { left: 24%; top: 20%; transform: rotate(4deg); filter: brightness(.92); }
+.ns-coin { position: absolute; right: 4%; top: 6%; width: 124px; height: 124px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #c3c9d2 45%, #7f8894 100%); box-shadow: inset 0 0 0 8px rgba(255,255,255,.35), 0 18px 36px rgba(0,0,0,.35); }
+.ns-hero__price { position: absolute; right: 0; bottom: 0; background: rgba(255,255,255,.08); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.18); border-radius: var(--ns-r); padding: 14px 18px; display: flex; flex-direction: column; }
+.ns-hero__price span { font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ns-ice); }
+.ns-hero__price strong { font-family: var(--ns-serif); font-size: 1.8rem; }
+.ns-hero__price small { color: #b8c3d1; }
+.ns-section__head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 18px; }
+.ns-section__head a { color: var(--ns-ice-dark); font-weight: 600; text-decoration: none; }
+.ns-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+.ns-cat { background: #fff; border: 1px solid var(--ns-s2); border-radius: var(--ns-r); padding: 22px; text-decoration: none !important; color: var(--ns-ink) !important; display: flex; flex-direction: column; gap: 6px; position: relative; overflow: hidden; transition: box-shadow .2s, transform .2s; }
+.ns-cat::after { content: ""; position: absolute; right: -30px; bottom: -30px; width: 110px; height: 110px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, var(--ns-s3)); opacity: .55; }
+.ns-cat:hover { box-shadow: var(--ns-shadow); transform: translateY(-2px); }
+.ns-cat__name { font-family: var(--ns-serif); font-size: 1.2rem; font-weight: 600; }
+.ns-cat__desc { font-size: .88rem; color: var(--ns-soft); }
+.ns-cat__count { margin-top: auto; padding-top: 10px; font-size: .8rem; font-weight: 600; color: var(--ns-ice-dark); }
+.ns-band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; background: var(--ns-s1); border-radius: 16px; padding: 36px; }
+.ns-step-card span { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(180deg, #f4f6f9, #c5cbd3); font-weight: 700; margin-bottom: 10px; }
+.ns-step-card p { color: var(--ns-soft); margin: 0; }
+.ns-stores { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
+.ns-store { background: #fff; border: 1px solid var(--ns-s2); border-radius: var(--ns-r); padding: 22px; }
+.ns-hours { list-style: none; padding: 0; margin: 0 0 16px; font-size: .88rem; }
+.ns-hours li { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--ns-s2); padding: 3px 0; }
+
+/* Booking */
+.ns-booking { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: start; }
+.ns-step { background: #fff; border: 1px solid var(--ns-s2); border-radius: var(--ns-r); padding: 20px 22px; margin-bottom: 16px; }
+.ns-step h2 { font-size: 1.15rem; display: flex; align-items: center; gap: 10px; }
+.ns-step h2 span { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ns-s2); font-family: inherit; font-size: .85rem; flex: none; }
+.ns-step.is-done h2 span { background: var(--ns-ink); color: #fff; }
+.ns-choices { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
+.ns-choice, .ns-day, .ns-slot { border: 1px solid var(--ns-s3); border-radius: 8px; text-decoration: none !important; color: var(--ns-ink) !important; }
+.ns-choice { padding: 12px 14px; display: flex; flex-direction: column; font-size: .9rem; }
+.ns-choice span { color: var(--ns-soft); font-size: .83rem; }
+.ns-choice.is-active, .ns-day.is-active, .ns-slot.is-active { border-color: var(--ns-ink); background: var(--ns-ink); color: #fff !important; }
+.ns-choice.is-active span { color: #c9d3df; }
+.ns-choice:hover, .ns-day:hover, .ns-slot:hover { border-color: var(--ns-ink); }
+.ns-days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; }
+.ns-day { flex: none; width: 62px; padding: 8px 0; text-align: center; display: flex; flex-direction: column; }
+.ns-day strong { font-size: 1.3rem; font-family: var(--ns-serif); }
+.ns-day small { font-size: .7rem; text-transform: uppercase; letter-spacing: .06em; }
+.ns-slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(76px, 1fr)); gap: 8px; }
+.ns-slot { padding: 9px 0; text-align: center; font-weight: 600; font-size: .9rem; }
+.ns-form label { display: block; font-weight: 600; font-size: .88rem; margin-bottom: 5px; }
+.ns-form input:not([type=radio]):not([type=checkbox]), .ns-form textarea { width: 100%; padding: 11px 12px; border: 1px solid var(--ns-s3); border-radius: 8px; font: inherit; background: #fff; }
+.ns-form input:focus, .ns-form textarea:focus { outline: 2px solid var(--ns-ice); outline-offset: 1px; }
+.ns-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.ns-radios { border: 0; padding: 0; margin: 0 0 14px; display: grid; gap: 8px; }
+.ns-radios legend { font-weight: 600; font-size: .88rem; margin-bottom: 6px; }
+.ns-radios label { display: flex; gap: 10px; align-items: center; font-weight: 500; border: 1px solid var(--ns-s3); border-radius: 8px; padding: 11px 14px; cursor: pointer; margin: 0; }
+.ns-radios label:has(input:checked) { border-color: var(--ns-ink); background: var(--ns-s1); box-shadow: inset 0 0 0 1px var(--ns-ink); }
+.ns-summary { background: #fff; border: 1px solid var(--ns-s2); border-radius: var(--ns-r); padding: 22px; position: sticky; top: 120px; }
+.ns-summary__row { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; font-size: .93rem; border-bottom: 1px solid var(--ns-s2); }
+.ns-mini { display: flex; gap: 10px; align-items: center; font-size: .85rem; margin: 8px 0; }
+.ns-mini__img { width: 56px; flex: none; background: var(--ns-s1); border-radius: 6px; overflow: hidden; }
+.ns-mini__img img, .ns-mini__img svg { width: 100%; height: auto; display: block; }
+.ns-confirm { max-width: 640px; margin: 0 auto; text-align: center; padding: 40px 0; }
+.ns-confirm__icon { width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 16px; display: grid; place-items: center; font-size: 1.8rem; color: #fff; background: var(--ns-ok); }
+
+/* Tegnede sølvbilleder (varer uden foto) */
+.ns-art { display: grid; place-items: center; aspect-ratio: 4/3; background: linear-gradient(180deg, #f9fafb, #eceff3); border-radius: 8px; }
+.ns-art svg { width: 100%; height: 100%; }
+
+/* Vareside */
+.ns-facts { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.ns-facts span { background: var(--ns-s1); border: 1px solid var(--ns-s2); border-radius: 999px; padding: 4px 12px; font-size: .85rem; font-weight: 600; }
+
+/* WooCommerce-elementer på sølvsider: sølv-twist på shoppens tema */
+body.ns-silver .woocommerce-products-header__title,
+body.ns-silver .product_title { font-family: var(--ns-serif); }
+body.ns-silver ul.products li.product { background: #fff; border: 1px solid var(--ns-s2); border-radius: var(--ns-r); padding: 12px 12px 16px; transition: box-shadow .2s, transform .2s; }
+body.ns-silver ul.products li.product:hover { box-shadow: var(--ns-shadow); transform: translateY(-2px); }
+body.ns-silver ul.products li.product .price,
+body.ns-silver .summary .price { color: var(--ns-ink); font-family: var(--ns-serif); font-weight: 700; }
+body.ns-silver .button:not(.ns-btn), body.ns-silver button.single_add_to_cart_button { background: var(--ns-ink) !important; color: #fff !important; border-radius: 999px !important; }
+body.ns-silver .onsale { background: var(--ns-ice-dark); }
+body.ns-silver .stock.in-stock { color: var(--ns-ok); }
+.ns-loop-book { margin-left: 6px; }
+
+@media (max-width: 900px) {
+  .ns-hero, .ns-booking { grid-template-columns: 1fr; }
+  .ns-hero { padding: 36px 24px; }
+  .ns-hero__art { height: 220px; }
+  .ns-band { grid-template-columns: 1fr; }
+  .ns-summary { position: static; }
+}
+@media (max-width: 560px) { .ns-row { grid-template-columns: 1fr; } }
